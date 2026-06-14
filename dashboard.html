@@ -2714,6 +2714,13 @@ class MeetingTrackerState {
           this.save(); // Save default meetings to DB so they persist
         } else {
           this.meetings = data;
+          
+          // Auto-fix migration for corrupted encoding from previous bug
+          const stringified = JSON.stringify(this.meetings);
+          if (stringified.includes('Ãƒ')) {
+            this.meetings = defaultMeetings;
+            this.save();
+          }
         }
         
         // Smart month selection
