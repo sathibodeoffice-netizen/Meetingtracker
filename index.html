@@ -2358,6 +2358,7 @@ body.light-theme .dept-input-form select {
                       <option value="rd">R&D Dept</option>
                       <option value="hr">HR Dept</option>
                       <option value="halal_bondhon">Halal Bondhon</option>
+                      <option value="quality">Quality Dept</option>
                     </select>
 
                     <input type="text" id="new-task-assignee" placeholder="Assignee (e.g., @sathib)">
@@ -3285,7 +3286,7 @@ function renderSelectedMeetingTasks() {
     grouped[dept].push(task);
   });
 
-  const deptKeys = ['general', 'calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon'];
+  const deptKeys = ['general', 'calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'quality'];
   
   deptKeys.forEach(deptKey => {
     const tasksInDept = grouped[deptKey];
@@ -3567,7 +3568,7 @@ function renderAddTasksView() {
   }
 
   // We support all departments in departmentNames mapping
-  const deptKeys = ['calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'general'];
+  const deptKeys = ['calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'quality', 'general'];
 
   deptKeys.forEach(deptKey => {
     const deptInfo = departmentNames[deptKey] || { title: "General Tasks", icon: "📋" };
