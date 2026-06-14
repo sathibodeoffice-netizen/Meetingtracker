@@ -2184,7 +2184,7 @@ body.light-theme .dept-input-form select {
 
       <!-- Footer Info -->
       <div class="sidebar-footer">
-        <p>© 2026 Meeting Tracker</p>
+        <p>Â© 2026 Meeting Tracker</p>
         <span class="theme-badge">Dark Glass Premium</span>
       </div>
     </aside>
@@ -2297,7 +2297,7 @@ body.light-theme .dept-input-form select {
               <div class="meetings-list-container" id="meetings-container">
                 <!-- Populated dynamically -->
                 <div class="empty-state">
-                  <div class="empty-icon">📂</div>
+                  <div class="empty-icon">ðŸ“‚</div>
                   <h3>No meetings recorded</h3>
                   <p>Click "New Meeting" to start tracking meetings and their corresponding tasks.</p>
                 </div>
@@ -2308,7 +2308,7 @@ body.light-theme .dept-input-form select {
             <div class="dashboard-panel panel-right glass-panel" id="detail-panel">
               <!-- Empty state initially -->
               <div class="detail-empty-state" id="detail-empty">
-                <div class="empty-icon-large">🎯</div>
+                <div class="empty-icon-large">ðŸŽ¯</div>
                 <h3>Select a Meeting</h3>
                 <p>Click on any meeting from the list to view its agenda, meeting notes, and manage associated tasks.</p>
               </div>
@@ -2584,31 +2584,31 @@ const defaultMeetings = [
     title: "Monthly General Decisions Meeting",
     date: "2026-06-13",
     time: "10:00",
-    description: "মাসিক সভার গুরুত্বপূর্ণ সিদ্ধান্তসমূহ এবং বিভিন্ন ডিপার্টমেন্টের কর্মপরিকল্পনা ও টার্গেট নির্ধারণ।",
+    description: "à¦®à¦¾à¦¸à¦¿à¦• à¦¸à¦­à¦¾à¦° à¦—à§à¦°à§à¦¤à§à¦¬à¦ªà§‚à¦°à§à¦£ à¦¸à¦¿à¦¦à§à¦§à¦¾à¦¨à§à¦¤à¦¸à¦®à§‚à¦¹ à¦à¦¬à¦‚ à¦¬à¦¿à¦­à¦¿à¦¨à§à¦¨ à¦¡à¦¿à¦ªà¦¾à¦°à§à¦Ÿà¦®à§‡à¦¨à§à¦Ÿà§‡à¦° à¦•à¦°à§à¦®à¦ªà¦°à¦¿à¦•à¦²à§à¦ªà¦¨à¦¾ à¦“ à¦Ÿà¦¾à¦°à§à¦—à§‡à¦Ÿ à¦¨à¦¿à¦°à§à¦§à¦¾à¦°à¦£à¥¤",
     tasks: [
       // 1. Calling Department
-      { id: "t_1", text: "কলিং টিম কর্মপরিকল্পনায় সম্মিলিত নোট ব্যবহার করবে।", priority: "medium", completed: false, department: "calling", assignee: "@Roky Arman" },
-      { id: "t_3", text: "নতুন সার্ভিস সম্পর্কে অবগত থাকতে হবে এবং প্রতি সোমবার ও বুধবার প্রতিষ্ঠান সম্পর্কে প্রেজেন্টেশন দিতে হবে।", priority: "medium", completed: false, department: "calling", assignee: "@everyone" },
+      { id: "t_1", text: "à¦•à¦²à¦¿à¦‚ à¦Ÿà¦¿à¦® à¦•à¦°à§à¦®à¦ªà¦°à¦¿à¦•à¦²à§à¦ªà¦¨à¦¾à¦¯à¦¼ à¦¸à¦®à§à¦®à¦¿à¦²à¦¿à¦¤ à¦¨à§‹à¦Ÿ à¦¬à§à¦¯à¦¬à¦¹à¦¾à¦° à¦•à¦°à¦¬à§‡à¥¤", priority: "medium", completed: false, department: "calling", assignee: "@Roky Arman" },
+      { id: "t_3", text: "à¦¨à¦¤à§à¦¨ à¦¸à¦¾à¦°à§à¦­à¦¿à¦¸ à¦¸à¦®à§à¦ªà¦°à§à¦•à§‡ à¦…à¦¬à¦—à¦¤ à¦¥à¦¾à¦•à¦¤à§‡ à¦¹à¦¬à§‡ à¦à¦¬à¦‚ à¦ªà§à¦°à¦¤à¦¿ à¦¸à§‹à¦®à¦¬à¦¾à¦° à¦“ à¦¬à§à¦§à¦¬à¦¾à¦° à¦ªà§à¦°à¦¤à¦¿à¦·à§à¦ à¦¾à¦¨ à¦¸à¦®à§à¦ªà¦°à§à¦•à§‡ à¦ªà§à¦°à§‡à¦œà§‡à¦¨à§à¦Ÿà§‡à¦¶à¦¨ à¦¦à¦¿à¦¤à§‡ à¦¹à¦¬à§‡à¥¤", priority: "medium", completed: false, department: "calling", assignee: "@everyone" },
       
       // 2. Review Department
-      { id: "t_4", text: "টাইপিং স্পিড প্রতি মিনিটে ৪০ শব্দে উন্নীত করতে হবে এবং এ বিষয়ে সার্টিফিকেট প্রদান করা হবে।", priority: "medium", completed: false, department: "review", assignee: "@sathib" },
-      { id: "t_5", text: "জুন মাসের মধ্যে সকল এডিট রিকোয়ার্ড সম্পন্ন করতে হবে (মামুন + হাসান = ২০০টি, সাথীব = ৭০টি, অন্যান্য = ৫০টি করে)।", priority: "high", completed: false, department: "review", assignee: "@Hasan @Moinul Islam @sathib @everyone" },
+      { id: "t_4", text: "à¦Ÿà¦¾à¦‡à¦ªà¦¿à¦‚ à¦¸à§à¦ªà¦¿à¦¡ à¦ªà§à¦°à¦¤à¦¿ à¦®à¦¿à¦¨à¦¿à¦Ÿà§‡ à§ªà§¦ à¦¶à¦¬à§à¦¦à§‡ à¦‰à¦¨à§à¦¨à§€à¦¤ à¦•à¦°à¦¤à§‡ à¦¹à¦¬à§‡ à¦à¦¬à¦‚ à¦ à¦¬à¦¿à¦·à¦¯à¦¼à§‡ à¦¸à¦¾à¦°à§à¦Ÿà¦¿à¦«à¦¿à¦•à§‡à¦Ÿ à¦ªà§à¦°à¦¦à¦¾à¦¨ à¦•à¦°à¦¾ à¦¹à¦¬à§‡à¥¤", priority: "medium", completed: false, department: "review", assignee: "@sathib" },
+      { id: "t_5", text: "à¦œà§à¦¨ à¦®à¦¾à¦¸à§‡à¦° à¦®à¦§à§à¦¯à§‡ à¦¸à¦•à¦² à¦à¦¡à¦¿à¦Ÿ à¦°à¦¿à¦•à§‹à¦¯à¦¼à¦¾à¦°à§à¦¡ à¦¸à¦®à§à¦ªà¦¨à§à¦¨ à¦•à¦°à¦¤à§‡ à¦¹à¦¬à§‡ (à¦®à¦¾à¦®à§à¦¨ + à¦¹à¦¾à¦¸à¦¾à¦¨ = à§¨à§¦à§¦à¦Ÿà¦¿, à¦¸à¦¾à¦¥à§€à¦¬ = à§­à§¦à¦Ÿà¦¿, à¦…à¦¨à§à¦¯à¦¾à¦¨à§à¦¯ = à§«à§¦à¦Ÿà¦¿ à¦•à¦°à§‡)à¥¤", priority: "high", completed: false, department: "review", assignee: "@Hasan @Moinul Islam @sathib @everyone" },
       
       // 3. Report Department
-      { id: "t_8", text: "এক মাসে হালাল বন্ধনে অর্ধেকদ্বীন থেকে কতগুলো বায়োডাটা আসে, তার তথ্য প্রদান এবং এডিট রিকোয়ার্ড ও নট অ্যাপ্রুভড বায়োডাটার তথ্য বিশ্লেষণ করা।", priority: "high", completed: false, department: "report", assignee: "@Babui @Mahedi Hasan" },
+      { id: "t_8", text: "à¦à¦• à¦®à¦¾à¦¸à§‡ à¦¹à¦¾à¦²à¦¾à¦² à¦¬à¦¨à§à¦§à¦¨à§‡ à¦…à¦°à§à¦§à§‡à¦•à¦¦à§à¦¬à§€à¦¨ à¦¥à§‡à¦•à§‡ à¦•à¦¤à¦—à§à¦²à§‹ à¦¬à¦¾à¦¯à¦¼à§‹à¦¡à¦¾à¦Ÿà¦¾ à¦†à¦¸à§‡, à¦¤à¦¾à¦° à¦¤à¦¥à§à¦¯ à¦ªà§à¦°à¦¦à¦¾à¦¨ à¦à¦¬à¦‚ à¦à¦¡à¦¿à¦Ÿ à¦°à¦¿à¦•à§‹à¦¯à¦¼à¦¾à¦°à§à¦¡ à¦“ à¦¨à¦Ÿ à¦…à§à¦¯à¦¾à¦ªà§à¦°à§à¦­à¦¡ à¦¬à¦¾à¦¯à¦¼à§‹à¦¡à¦¾à¦Ÿà¦¾à¦° à¦¤à¦¥à§à¦¯ à¦¬à¦¿à¦¶à§à¦²à§‡à¦·à¦£ à¦•à¦°à¦¾à¥¤", priority: "high", completed: false, department: "report", assignee: "@Babui @Mahedi Hasan" },
       
       // 4. Marketing Department
-      { id: "t_6", text: "জুন মাসে হালাল বন্ধনের টার্গেট = ৬০০+ অর্জন করা।", priority: "high", completed: false, department: "marketing", assignee: "@everyone" },
-      { id: "t_7", text: "হালাল বন্ধনের জন্য ১ জন নতুন লোক নিয়োগ দিতে হবে।", priority: "medium", completed: false, department: "marketing", assignee: "@sathib" },
-      { id: "t_11", text: "মার্কেটিং টিম ইনকমপ্লিট বায়োডাটাগুলোর জন্য ক্যাম্পেইন পরিচালনা করবে।", priority: "high", completed: false, department: "marketing", assignee: "@Ahsan" },
+      { id: "t_6", text: "à¦œà§à¦¨ à¦®à¦¾à¦¸à§‡ à¦¹à¦¾à¦²à¦¾à¦² à¦¬à¦¨à§à¦§à¦¨à§‡à¦° à¦Ÿà¦¾à¦°à§à¦—à§‡à¦Ÿ = à§¬à§¦à§¦+ à¦…à¦°à§à¦œà¦¨ à¦•à¦°à¦¾à¥¤", priority: "high", completed: false, department: "marketing", assignee: "@everyone" },
+      { id: "t_7", text: "à¦¹à¦¾à¦²à¦¾à¦² à¦¬à¦¨à§à¦§à¦¨à§‡à¦° à¦œà¦¨à§à¦¯ à§§ à¦œà¦¨ à¦¨à¦¤à§à¦¨ à¦²à§‹à¦• à¦¨à¦¿à¦¯à¦¼à§‹à¦— à¦¦à¦¿à¦¤à§‡ à¦¹à¦¬à§‡à¥¤", priority: "medium", completed: false, department: "marketing", assignee: "@sathib" },
+      { id: "t_11", text: "à¦®à¦¾à¦°à§à¦•à§‡à¦Ÿà¦¿à¦‚ à¦Ÿà¦¿à¦® à¦‡à¦¨à¦•à¦®à¦ªà§à¦²à¦¿à¦Ÿ à¦¬à¦¾à¦¯à¦¼à§‹à¦¡à¦¾à¦Ÿà¦¾à¦—à§à¦²à§‹à¦° à¦œà¦¨à§à¦¯ à¦•à§à¦¯à¦¾à¦®à§à¦ªà§‡à¦‡à¦¨ à¦ªà¦°à¦¿à¦šà¦¾à¦²à¦¨à¦¾ à¦•à¦°à¦¬à§‡à¥¤", priority: "high", completed: false, department: "marketing", assignee: "@Ahsan" },
       
       // 5. Technical Department
-      { id: "t_2", text: "মিটিং ট্র্যাকার ব্যবহার করা নিশ্চিত করতে হবে।", priority: "low", completed: true, department: "technical", assignee: "@sathib" },
-      { id: "t_9", text: "হালাল বন্ধনের ব্র্যান্ড ভ্যালু বৃদ্ধি করা এবং টেকনিক্যালি হালাল বন্ধনের নম্বর স্প্যাম হিসেবে চিহ্নিত হচ্ছে কি না তা যাচাই করা।", priority: "high", completed: false, department: "technical", assignee: "@Ahsan @Ismail Alif" },
-      { id: "t_10", text: "টেকনিক্যাল টিমকে ১৮ তারিখের মধ্যে বড় মাইগ্রেশন ব্যতীত সকল কাজ সম্পন্ন করতে হবে।", priority: "high", completed: false, department: "technical", assignee: "@Ismail Alif" },
+      { id: "t_2", text: "à¦®à¦¿à¦Ÿà¦¿à¦‚ à¦Ÿà§à¦°à§à¦¯à¦¾à¦•à¦¾à¦° à¦¬à§à¦¯à¦¬à¦¹à¦¾à¦° à¦•à¦°à¦¾ à¦¨à¦¿à¦¶à§à¦šà¦¿à¦¤ à¦•à¦°à¦¤à§‡ à¦¹à¦¬à§‡à¥¤", priority: "low", completed: true, department: "technical", assignee: "@sathib" },
+      { id: "t_9", text: "à¦¹à¦¾à¦²à¦¾à¦² à¦¬à¦¨à§à¦§à¦¨à§‡à¦° à¦¬à§à¦°à§à¦¯à¦¾à¦¨à§à¦¡ à¦­à§à¦¯à¦¾à¦²à§ à¦¬à§ƒà¦¦à§à¦§à¦¿ à¦•à¦°à¦¾ à¦à¦¬à¦‚ à¦Ÿà§‡à¦•à¦¨à¦¿à¦•à§à¦¯à¦¾à¦²à¦¿ à¦¹à¦¾à¦²à¦¾à¦² à¦¬à¦¨à§à¦§à¦¨à§‡à¦° à¦¨à¦®à§à¦¬à¦° à¦¸à§à¦ªà§à¦¯à¦¾à¦® à¦¹à¦¿à¦¸à§‡à¦¬à§‡ à¦šà¦¿à¦¹à§à¦¨à¦¿à¦¤ à¦¹à¦šà§à¦›à§‡ à¦•à¦¿ à¦¨à¦¾ à¦¤à¦¾ à¦¯à¦¾à¦šà¦¾à¦‡ à¦•à¦°à¦¾à¥¤", priority: "high", completed: false, department: "technical", assignee: "@Ahsan @Ismail Alif" },
+      { id: "t_10", text: "à¦Ÿà§‡à¦•à¦¨à¦¿à¦•à§à¦¯à¦¾à¦² à¦Ÿà¦¿à¦®à¦•à§‡ à§§à§® à¦¤à¦¾à¦°à¦¿à¦–à§‡à¦° à¦®à¦§à§à¦¯à§‡ à¦¬à¦¡à¦¼ à¦®à¦¾à¦‡à¦—à§à¦°à§‡à¦¶à¦¨ à¦¬à§à¦¯à¦¤à§€à¦¤ à¦¸à¦•à¦² à¦•à¦¾à¦œ à¦¸à¦®à§à¦ªà¦¨à§à¦¨ à¦•à¦°à¦¤à§‡ à¦¹à¦¬à§‡à¥¤", priority: "high", completed: false, department: "technical", assignee: "@Ismail Alif" },
       
       // 6. R&D Department
-      { id: "t_12", text: "কেন মানুষ তাদের বিয়ের খবর জানাচ্ছে না, সে বিষয়ে গবেষণা (R&D) করতে হবে।", priority: "medium", completed: false, department: "rd", assignee: "@everyone" }
+      { id: "t_12", text: "à¦•à§‡à¦¨ à¦®à¦¾à¦¨à§à¦· à¦¤à¦¾à¦¦à§‡à¦° à¦¬à¦¿à¦¯à¦¼à§‡à¦° à¦–à¦¬à¦° à¦œà¦¾à¦¨à¦¾à¦šà§à¦›à§‡ à¦¨à¦¾, à¦¸à§‡ à¦¬à¦¿à¦·à¦¯à¦¼à§‡ à¦—à¦¬à§‡à¦·à¦£à¦¾ (R&D) à¦•à¦°à¦¤à§‡ à¦¹à¦¬à§‡à¥¤", priority: "medium", completed: false, department: "rd", assignee: "@everyone" }
     ]
   }
 ];
@@ -2820,17 +2820,28 @@ const monthNames = [
 ];
 
 // Department Names mapping
-const departmentNames = {
-  general: { title: "General Tasks", icon: "📋" },
-  calling: { title: "Calling Department", icon: "📞" },
-  review: { title: "Review Department", icon: "🔎" },
-  report: { title: "Report Department", icon: "📊" },
-  marketing: { title: "Marketing Department", icon: "🤝" },
-  technical: { title: "Technical Department", icon: "⚙️" },
-  rd: { title: "R&D Department", icon: "💡" },
-  hr: { title: "HR Department", icon: "👥" },
-  halal_bondhon: { title: "Halal Bondhon", icon: "💍" }
+const defaultDepartmentNames = {
+  general: { title: "General Tasks", icon: "ðŸ“‹" },
+  calling: { title: "Calling Department", icon: "ðŸ“ž" },
+  review: { title: "Review Department", icon: "ðŸ”Ž" },
+  report: { title: "Report Department", icon: "ðŸ“Š" },
+  marketing: { title: "Marketing Department", icon: "ðŸ¤" },
+  technical: { title: "Technical Department", icon: "âš™ï¸" },
+  rd: { title: "R&D Department", icon: "ðŸ’¡" },
+  hr: { title: "HR Department", icon: "ðŸ‘¥" },
+  halal_bondhon: { title: "Halal Bondhon", icon: "ðŸ’" },
+  quality: { title: "Quality Check Department", icon: "✅" }
 };
+
+let storedDepts = JSON.parse(localStorage.getItem('meeting_tracker_custom_depts')) || {};
+for (let key in storedDepts) {
+  if (departmentNames[key]) {
+    departmentNames[key].title = storedDepts[key].title;
+  }
+}
+function saveDepartmentNames() {
+  localStorage.setItem('meeting_tracker_custom_depts', JSON.stringify(departmentNames));
+}
 
 /* ==========================================================================
    UI Event Listeners
@@ -3044,6 +3055,15 @@ function setActiveTab(tabName) {
 function updateUI() {
   DOM.yearDisplay.textContent = state.activeYear;
   
+  // Update select options dynamically based on customized names
+  if (DOM.newTaskDepartment) {
+    Array.from(DOM.newTaskDepartment.options).forEach(opt => {
+      if (departmentNames[opt.value]) {
+        opt.text = departmentNames[opt.value].title;
+      }
+    });
+  }
+  
   // Sidebar months update
   renderSidebarMonths();
   
@@ -3156,7 +3176,7 @@ function renderMeetingsList() {
   if (filtered.length === 0) {
     DOM.meetingsContainer.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon">📂</div>
+        <div class="empty-icon">ðŸ“‚</div>
         <h3>No meetings found</h3>
         <p>No meeting records found for this year/month or your search keywords.</p>
       </div>
@@ -3297,7 +3317,7 @@ function renderSelectedMeetingTasks() {
     section.className = 'department-section-container';
 
     // Create Department Title Header
-    const deptInfo = departmentNames[deptKey] || { title: "Other Tasks", icon: "📋" };
+    const deptInfo = departmentNames[deptKey] || { title: "Other Tasks", icon: "ðŸ“‹" };
     const header = document.createElement('div');
     header.className = 'department-title-header';
     header.innerHTML = `
@@ -3547,7 +3567,7 @@ function renderAddTasksView() {
   if (meetings.length === 0) {
     DOM.departmentsInputContainer.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
-        <div class="empty-icon">📂</div>
+        <div class="empty-icon">ðŸ“‚</div>
         <h3>No meetings found</h3>
         <p>Please create a meeting from the Dashboard first before adding tasks.</p>
       </div>
@@ -3559,7 +3579,7 @@ function renderAddTasksView() {
   if (!meeting) {
     DOM.departmentsInputContainer.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
-        <div class="empty-icon">📂</div>
+        <div class="empty-icon">ðŸ“‚</div>
         <h3>Meeting not found</h3>
         <p>Please select another meeting from the dropdown.</p>
       </div>
@@ -3571,7 +3591,7 @@ function renderAddTasksView() {
   const deptKeys = ['calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'quality', 'general'];
 
   deptKeys.forEach(deptKey => {
-    const deptInfo = departmentNames[deptKey] || { title: "General Tasks", icon: "📋" };
+    const deptInfo = departmentNames[deptKey] || { title: "General Tasks", icon: "ðŸ“‹" };
     const deptTasks = (meeting.tasks || []).filter(t => (t.department || 'general') === deptKey);
 
     // Create card
@@ -3582,7 +3602,7 @@ function renderAddTasksView() {
     let cardHTML = `
       <div class="dept-input-card-header">
         <span class="dept-input-card-icon">${deptInfo.icon}</span>
-        <span class="dept-input-card-title">${deptInfo.title}</span>
+        <span class="dept-input-card-title" contenteditable="true" spellcheck="false" data-dept-key="${deptKey}" title="Click to edit department name">${deptInfo.title}</span>
       </div>
     `;
 
@@ -3645,6 +3665,31 @@ function renderAddTasksView() {
           state.save();
           renderAddTasksView();
           showToast(`Task ${task.completed ? 'completed' : 'reopened'}`);
+        }
+      });
+    });
+
+    // Inline edit department title
+    card.querySelectorAll('.dept-input-card-title').forEach(titleEl => {
+      titleEl.addEventListener('blur', () => {
+        const key = titleEl.getAttribute('data-dept-key');
+        const newTitle = titleEl.textContent.trim();
+        if (newTitle && departmentNames[key] && departmentNames[key].title !== newTitle) {
+          departmentNames[key].title = newTitle;
+          saveDepartmentNames();
+          // We update only the text without full re-render to avoid losing focus/state jump
+          // But update dropdowns globally
+          Array.from(DOM.newTaskDepartment.options).forEach(opt => {
+            if (opt.value === key) opt.text = newTitle;
+          });
+          showToast('Department name updated');
+        }
+      });
+      // Handle Enter key to blur
+      titleEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          titleEl.blur();
         }
       });
     });
@@ -3768,7 +3813,7 @@ function updateMeetingsArchive() {
   if (filtered.length === 0) {
     DOM.archiveTimelineContainer.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon">📂</div>
+        <div class="empty-icon">ðŸ“‚</div>
         <h3>No meetings archived</h3>
         <p>No matches for the selected year, month, or search terms.</p>
       </div>
