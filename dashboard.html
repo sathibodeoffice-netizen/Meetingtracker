@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2148,15 +2148,15 @@ body.light-theme .dept-input-form select {
     
     const sidebar = document.querySelector('.nav-menu');
     if (sidebar) {
-      const userProfileHTML = 
+      const userProfileHTML = `
         <div style="margin-top: auto; padding: 16px; border-top: 1px solid rgba(255,255,255,0.05);">
-          <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;"> + (user.name || 'User') + </div>
-          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: capitalize;"> + roleText + </div>
+          <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">${user.name || 'User'}</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: capitalize;">${roleText}</div>
           <button id="btn-logout" class="btn" style="width: 100%; padding: 8px; font-size: 13px; background: rgba(239, 68, 68, 0.1); color: var(--danger);">
             Logout
           </button>
         </div>
-      ;
+      `;
       sidebar.insertAdjacentHTML('beforeend', userProfileHTML);
       
       document.getElementById('btn-logout').addEventListener('click', () => {
