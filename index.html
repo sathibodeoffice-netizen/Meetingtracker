@@ -4148,12 +4148,66 @@ function applyTheme(theme) {
    Bootstrap / Initial Startup
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', async () => {
+  initLogin();
   applyTheme(state.theme);
   initEventListeners();
   await state.fetchMeetings();
   updateUI();
 });
 
+/* ==========================================================================
+   Login Logic
+   ========================================================================== */
+function initLogin() {
+  const loginScreen = document.getElementById('login-screen');
+  const appContainer = document.getElementById('app-container');
+  const loginForm = document.getElementById('login-form');
+  const loginError = document.getElementById('login-error');
+  const tabAdmin = document.getElementById('tab-admin');
+  const tabAgent = document.getElementById('tab-agent');
+  let loginType = 'admin';
+
+  // Check if already logged in
+  if (localStorage.getItem('mt_logged_in') === 'true') {
+    loginScreen.classList.add('hidden');
+    appContainer.classList.remove('hidden');
+  }
+
+  tabAdmin.addEventListener('click', () => {
+    loginType = 'admin';
+    tabAdmin.classList.add('active');
+    tabAgent.classList.remove('active');
+    loginError.classList.add('hidden');
+  });
+
+  tabAgent.addEventListener('click', () => {
+    loginType = 'agent';
+    tabAgent.classList.add('active');
+    tabAdmin.classList.remove('active');
+    loginError.classList.add('hidden');
+  });
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const user = document.getElementById('login-username').value;
+    const pass = document.getElementById('login-password').value;
+
+    if (loginType === 'admin' && user === 'admin' && pass === 'admin123') {
+      loginSuccess();
+    } else if (loginType === 'agent' && user === 'agent' && pass === 'agent123') {
+      loginSuccess();
+    } else {
+      loginError.textContent = 'Invalid username or password';
+      loginError.classList.remove('hidden');
+    }
+  });
+
+  function loginSuccess() {
+    localStorage.setItem('mt_logged_in', 'true');
+    loginScreen.classList.add('hidden');
+    appContainer.classList.remove('hidden');
+  }
+}
 </script>
 </body>
 </html>
