@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2146,7 +2146,37 @@ body.light-theme .dept-input-form select {
     const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
     const roleText = user.role === 'admin' ? 'Administrator' : (user.designation || 'Agent');
     
-    // Call enforce restrictions on load
+    // Agent Restrictions
+    function enforceAgentRestrictions() {
+      if (user.role === 'agent') {
+        const addTasksNav = document.getElementById('nav-add-tasks');
+        if (addTasksNav) {
+          addTasksNav.style.display = 'flex';
+          if (addTasksNav.innerHTML.includes('Add Tasks')) {
+            addTasksNav.innerHTML = addTasksNav.innerHTML.replace('Add Tasks', 'Tasks');
+          }
+        }
+        
+        const quickAddForm = document.getElementById('add-task-form');
+        if (quickAddForm) quickAddForm.style.display = 'none';
+        
+        const newMeetingBtn = document.getElementById('btn-new-meeting');
+        if (newMeetingBtn) newMeetingBtn.style.display = 'none';
+        
+        document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn, .priority-badge-select, .priority-badge, .dept-input-form').forEach(el => {
+          el.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.task-text, .editable-dept-task-text, .editable-archive-task-text').forEach(el => {
+          el.setAttribute('contenteditable', 'false');
+        });
+      }
+    }
+
+    const restrictObserver = new MutationObserver(() => {
+      enforceAgentRestrictions();
+    });
+    restrictObserver.observe(document.body, { childList: true, subtree: true });
     enforceAgentRestrictions();
     
     const sidebar = document.querySelector('.nav-menu');
@@ -2343,7 +2373,7 @@ body.light-theme .dept-input-form select {
             <div class="dashboard-panel panel-right glass-panel" id="detail-panel">
               <!-- Empty state initially -->
               <div class="detail-empty-state" id="detail-empty">
-                <div class="empty-icon-large">ðŸ“…</div>
+                <div class="empty-icon-large">📅</div>
                 <h3>Select a Meeting</h3>
                 <p>Click on any meeting from the list to view its agenda, meeting notes, and manage associated tasks.</p>
               </div>
@@ -2855,16 +2885,16 @@ const monthNames = [
 
 // Department Names mapping
 const departmentNames = {
-  general: { title: "General Tasks", icon: "ðŸ“‹" },
-  calling: { title: "Calling Department", icon: "ðŸ“‹" },
-  review: { title: "Review Department", icon: "ðŸ“‹" },
-  report: { title: "Report Department", icon: "ðŸ“‹" },
-  quality: { title: "Quality Check", icon: "ðŸ“‹" },
-  marketing: { title: "Marketing Department", icon: "ðŸ“‹" },
-  technical: { title: "Technical Department", icon: "ðŸ“‹" },
-  rd: { title: "R&D Department", icon: "ðŸ“‹" },
-  hr: { title: "HR Department", icon: "ðŸ“‹" },
-  halal_bondhon: { title: "Halal Bondhon", icon: "ðŸ“‹" }
+  general: { title: "General Tasks", icon: "📌" },
+  calling: { title: "Calling Department", icon: "📞" },
+  review: { title: "Review Department", icon: "🔍" },
+  report: { title: "Report Department", icon: "📊" },
+  quality: { title: "Quality Check", icon: "✅" },
+  marketing: { title: "Marketing Department", icon: "📈" },
+  technical: { title: "Technical Department", icon: "💻" },
+  rd: { title: "R&D Department", icon: "🔬" },
+  hr: { title: "HR Department", icon: "👥" },
+  halal_bondhon: { title: "Halal Bondhon", icon: "💍" }
 };
 
 /* ==========================================================================
@@ -3355,7 +3385,7 @@ function renderSelectedMeetingTasks() {
     section.className = 'department-section-container';
 
     // Create Department Title Header
-    const deptInfo = departmentNames[deptKey] || { title: "Other Tasks", icon: "ðŸ“‹" };
+    const deptInfo = departmentNames[deptKey] || { title: "Other Tasks", icon: "📌" };
     const header = document.createElement('div');
     header.className = 'department-title-header';
     header.innerHTML = `
@@ -3632,7 +3662,7 @@ function renderAddTasksView() {
   const deptKeys = ['calling', 'review', 'report', 'quality', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'general'];
 
   deptKeys.forEach(deptKey => {
-    const deptInfo = departmentNames[deptKey] || { title: "General Tasks", icon: "ðŸ“‹" };
+    const deptInfo = departmentNames[deptKey] || { title: "General Tasks", icon: "📌" };
     const deptTasks = (meeting.tasks || []).filter(isTaskVisibleToUser).filter(t => (t.department || 'general') === deptKey);
 
     // Create card
@@ -4176,48 +4206,6 @@ function importBackup(e) {
    ========================================================================== */
 
 // Escape HTML tags to protect against XSS injection
-  // Enforce Agent Restrictions
-  function enforceAgentRestrictions() {
-    const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
-    if (user.role === 'agent') {
-      // Modify Nav Add Tasks text
-      const addTasksNav = document.getElementById('nav-add-tasks');
-      if (addTasksNav) {
-        addTasksNav.style.display = 'flex'; // Ensure visible
-        if (addTasksNav.innerHTML.includes('Add Tasks')) {
-          addTasksNav.innerHTML = addTasksNav.innerHTML.replace('Add Tasks', 'Tasks');
-        }
-      }
-      
-      // Hide quick add task form
-      const quickAddForm = document.getElementById('add-task-form');
-      if (quickAddForm) quickAddForm.style.display = 'none';
-      
-      // Hide '+ New Meeting' button
-      const newMeetingBtn = document.getElementById('btn-new-meeting');
-      if (newMeetingBtn) newMeetingBtn.style.display = 'none';
-      
-      // Hide Delete buttons, Priority dropdowns, and Add Task forms
-      document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn, .priority-badge-select, .priority-badge, .dept-input-form').forEach(el => {
-        el.style.display = 'none';
-      });
-      
-      // Disable task text editing
-      document.querySelectorAll('.task-text, .editable-dept-task-text, .editable-archive-task-text').forEach(el => {
-        el.setAttribute('contenteditable', 'false');
-      });
-    }
-  }
-
-  // Use MutationObserver to ensure restrictions apply to all dynamically rendered content
-  const restrictObserver = new MutationObserver(() => {
-    enforceAgentRestrictions();
-  });
-  document.addEventListener('DOMContentLoaded', () => {
-    restrictObserver.observe(document.body, { childList: true, subtree: true });
-    enforceAgentRestrictions();
-  });
-
   // Role-based task visibility helper
   function isTaskVisibleToUser(task) {
     const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
