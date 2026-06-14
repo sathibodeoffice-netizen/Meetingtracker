@@ -2146,18 +2146,8 @@ body.light-theme .dept-input-form select {
     const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
     const roleText = user.role === 'admin' ? 'Administrator' : (user.designation || 'Agent');
     
-    // Role-based access control
-    if (user.role === 'agent') {
-      const addTasksNav = document.getElementById('nav-add-tasks');
-      if (addTasksNav) {
-        addTasksNav.style.display = 'none';
-      }
-      // Also disable the Quick Add Task form in dashboard
-      const quickAddForm = document.getElementById('add-task-form');
-      if (quickAddForm) {
-        quickAddForm.style.display = 'none';
-      }
-    }
+    // Call enforce restrictions on load
+    enforceAgentRestrictions();
     
     const sidebar = document.querySelector('.nav-menu');
     if (sidebar) {
@@ -4186,6 +4176,50 @@ function importBackup(e) {
    ========================================================================== */
 
 // Escape HTML tags to protect against XSS injection
+  // Enforce Agent Restrictions
+  function enforceAgentRestrictions() {
+    const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
+    if (user.role === 'agent') {
+      // Hide Nav Add Tasks
+      const addTasksNav = document.getElementById('nav-add-tasks');
+      if (addTasksNav) addTasksNav.style.display = 'none';
+      
+      // Hide quick add task form
+      const quickAddForm = document.getElementById('add-task-form');
+      if (quickAddForm) quickAddForm.style.display = 'none';
+      
+      // Hide '+ New Meeting' button
+      const newMeetingBtn = document.getElementById('btn-new-meeting');
+      if (newMeetingBtn) newMeetingBtn.style.display = 'none';
+      
+      // Hide Delete and Clear buttons
+      document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn').forEach(btn => {
+        btn.style.display = 'none';
+      });
+      
+      // Disable Priority dropdowns
+      document.querySelectorAll('.priority-badge-select').forEach(sel => {
+        sel.disabled = true;
+        sel.style.opacity = '0.7';
+        sel.style.cursor = 'not-allowed';
+      });
+      
+      // Disable task text editing
+      document.querySelectorAll('.task-text, .editable-dept-task-text, .editable-archive-task-text').forEach(el => {
+        el.setAttribute('contenteditable', 'false');
+      });
+    }
+  }
+
+  // Use MutationObserver to ensure restrictions apply to all dynamically rendered content
+  const restrictObserver = new MutationObserver(() => {
+    enforceAgentRestrictions();
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    restrictObserver.observe(document.body, { childList: true, subtree: true });
+    enforceAgentRestrictions();
+  });
+
   // Role-based task visibility helper
   function isTaskVisibleToUser(task) {
     const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
