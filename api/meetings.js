@@ -9,8 +9,13 @@ let clientPromise;
 if (!uri) {
   console.warn('Please add your MONGODB_URI environment variable in Vercel.');
 } else {
-  client = new MongoClient(uri, {});
-  clientPromise = client.connect();
+  try {
+    client = new MongoClient(uri, {});
+    clientPromise = client.connect();
+  } catch (error) {
+    console.error('Invalid MONGODB_URI:', error);
+    clientPromise = Promise.reject(error);
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -23,8 +28,8 @@ module.exports = async function handler(req, res) {
     return res.status(200).end();
   }
 
-  if (!uri) {
-    return res.status(500).json({ error: 'Database connection string not configured.' });
+  if (!uri || (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://'))) {
+    return res.status(500).json({ error: 'Database connection string is invalid. Please use the correct MONGODB_URI.' });
   }
 
   try {
