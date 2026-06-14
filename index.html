@@ -192,35 +192,36 @@
       <div id="auth-message" class="message"></div>
 
       <!-- LOGIN FORM -->
-      <form id="form-login" onsubmit="handleLogin(event)">
+      <form id="form-login" onsubmit="handleLogin(event)" autocomplete="off">
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" id="login-email" required placeholder="Enter your email">
+          <input type="email" id="login-email" required placeholder="Enter your email" autocomplete="new-password">
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="login-password" required placeholder="Enter your password">
+          <input type="password" id="login-password" required placeholder="Enter your password" autocomplete="new-password">
         </div>
         <button type="submit" class="btn" id="btn-login">Log In</button>
       </form>
 
       <!-- SIGNUP FORM -->
-      <form id="form-signup" class="hidden" onsubmit="handleSignup(event)">
+      <form id="form-signup" class="hidden" onsubmit="handleSignup(event)" autocomplete="off">
         <div class="form-group">
           <label>Full Name</label>
-          <input type="text" id="signup-name" required placeholder="e.g. John Doe">
+          <input type="text" id="signup-name" required placeholder="John Doe" autocomplete="new-password">
         </div>
         <div class="form-group">
-          <label>Designation</label>
-          <input type="text" id="signup-designation" required placeholder="e.g. Sales Executive">
+          <label>Designation (e.g., Customer Care)</label>
+          <input type="text" id="signup-designation" required placeholder="Agent Role Name" autocomplete="new-password">
         </div>
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" id="signup-email" required placeholder="name@company.com">
+          <input type="email" id="signup-email" required placeholder="john@example.com" autocomplete="new-password">
         </div>
         <div class="form-group">
           <label>Role</label>
           <select id="signup-role" required>
+            <option value="" disabled selected>Select Role</option>
             <option value="agent">Agent</option>
             <option value="admin">Admin</option>
           </select>
@@ -242,9 +243,20 @@
   <script>
     // Check if already logged in
     document.addEventListener('DOMContentLoaded', () => {
-      const token = localStorage.getItem('mt_token');
-      if (token) {
-        window.location.href = '/dashboard.html';
+      // Clear forms to prevent auto-login loops from password managers
+      document.getElementById('form-login').reset();
+      document.getElementById('form-signup').reset();
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('logout') === 'true') {
+        localStorage.removeItem('mt_token');
+        localStorage.removeItem('mt_user');
+        window.history.replaceState({}, document.title, "/");
+      } else {
+        const token = localStorage.getItem('mt_token');
+        if (token) {
+          window.location.href = '/dashboard.html';
+        }
       }
     });
 
