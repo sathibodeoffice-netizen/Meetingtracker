@@ -2833,7 +2833,12 @@ const defaultDepartmentNames = {
   quality: { title: "Quality Check Department", icon: "✅" }
 };
 
-let storedDepts = JSON.parse(localStorage.getItem('meeting_tracker_custom_depts')) || {};
+let departmentNames = JSON.parse(JSON.stringify(defaultDepartmentNames));
+let storedDepts = {};
+try {
+  storedDepts = JSON.parse(localStorage.getItem('meeting_tracker_custom_depts')) || {};
+} catch(e) {}
+
 for (let key in storedDepts) {
   if (departmentNames[key]) {
     departmentNames[key].title = storedDepts[key].title;
