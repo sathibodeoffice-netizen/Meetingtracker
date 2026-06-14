@@ -1,0 +1,9 @@
+{
+  "name": "meeting-tracker",
+  "version": "1.0.0",
+  "description": "Meeting Tracker with MongoDB",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^6.8.0"
+  }
+}
