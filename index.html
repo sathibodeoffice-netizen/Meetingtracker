@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2824,6 +2824,7 @@ const departmentNames = {
   calling: { title: "Calling Department", icon: "📞" },
   review: { title: "Review Department", icon: "🔍" },
   report: { title: "Report Department", icon: "📊" },
+  quality: { title: "Quality Check", icon: "✅" },
   marketing: { title: "Marketing Department", icon: "📢" },
   technical: { title: "Technical Department", icon: "💻" },
   rd: { title: "R&D Department", icon: "🔬" },
@@ -3285,7 +3286,7 @@ function renderSelectedMeetingTasks() {
     grouped[dept].push(task);
   });
 
-  const deptKeys = ['general', 'calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon'];
+  const deptKeys = ['general', 'calling', 'review', 'report', 'quality', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon'];
   
   deptKeys.forEach(deptKey => {
     const tasksInDept = grouped[deptKey];
@@ -3567,7 +3568,7 @@ function renderAddTasksView() {
   }
 
   // We support all departments in departmentNames mapping
-  const deptKeys = ['calling', 'review', 'report', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'general'];
+  const deptKeys = ['calling', 'review', 'report', 'quality', 'marketing', 'technical', 'rd', 'hr', 'halal_bondhon', 'general'];
 
   deptKeys.forEach(deptKey => {
     const deptInfo = departmentNames[deptKey] || { title: "General Tasks", icon: "ðŸ“‹" };
