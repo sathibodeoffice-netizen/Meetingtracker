@@ -2137,7 +2137,44 @@ body.light-theme .dept-input-form select {
 </style>
 </head>
 <body class="dark-theme">
-  <div class="app-container">
+  <div id="login-screen" class="login-screen">
+    <div class="login-card glass-panel">
+      <div class="brand" style="justify-content: center; margin-bottom: 32px;">
+        <div class="logo-icon" style="width: 48px; height: 48px; border-radius: 14px; margin-right: 12px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+            <path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/>
+          </svg>
+        </div>
+        <span class="brand-name" style="font-size: 24px;">Meeting Tracker</span>
+      </div>
+      
+      <div class="login-tabs">
+        <button class="login-tab active" id="tab-admin" type="button">Admin Login</button>
+        <button class="login-tab" id="tab-agent" type="button">Agent Login</button>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; display: block;">Username</label>
+          <input type="text" id="login-username" required placeholder="Enter username" style="width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; font-size: 15px; margin-bottom: 20px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; display: block;">Password</label>
+          <input type="password" id="login-password" required placeholder="Enter password" style="width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; font-size: 15px; margin-bottom: 16px;">
+        </div>
+        <div id="login-error" class="error-text hidden" style="color: #ff6b6b; font-size: 13px; margin-bottom: 20px; text-align: center; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 8px;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 16px; font-weight: 600; border-radius: 10px;">Login</button>
+      </form>
+      
+      <div style="margin-top: 24px; font-size: 12.5px; color: rgba(255,255,255,0.4); text-align: center; line-height: 1.6;">
+        <p>Admin: <strong>admin</strong> / <strong>admin123</strong></p>
+        <p>Agent: <strong>agent</strong> / <strong>agent123</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-container hidden" id="app-container">
     <!-- Sidebar Navigation -->
     <aside class="sidebar" id="app-sidebar">
       <div class="brand">
