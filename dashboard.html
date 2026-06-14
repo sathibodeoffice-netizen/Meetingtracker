@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -4180,9 +4180,14 @@ function importBackup(e) {
   function enforceAgentRestrictions() {
     const user = JSON.parse(localStorage.getItem('mt_user') || '{}');
     if (user.role === 'agent') {
-      // Hide Nav Add Tasks
+      // Modify Nav Add Tasks text
       const addTasksNav = document.getElementById('nav-add-tasks');
-      if (addTasksNav) addTasksNav.style.display = 'none';
+      if (addTasksNav) {
+        addTasksNav.style.display = 'flex'; // Ensure visible
+        if (addTasksNav.innerHTML.includes('Add Tasks')) {
+          addTasksNav.innerHTML = addTasksNav.innerHTML.replace('Add Tasks', 'Tasks');
+        }
+      }
       
       // Hide quick add task form
       const quickAddForm = document.getElementById('add-task-form');
@@ -4192,16 +4197,9 @@ function importBackup(e) {
       const newMeetingBtn = document.getElementById('btn-new-meeting');
       if (newMeetingBtn) newMeetingBtn.style.display = 'none';
       
-      // Hide Delete and Clear buttons
-      document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn').forEach(btn => {
-        btn.style.display = 'none';
-      });
-      
-      // Disable Priority dropdowns
-      document.querySelectorAll('.priority-badge-select').forEach(sel => {
-        sel.disabled = true;
-        sel.style.opacity = '0.7';
-        sel.style.cursor = 'not-allowed';
+      // Hide Delete buttons, Priority dropdowns, and Add Task forms
+      document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn, .priority-badge-select, .priority-badge, .dept-input-form').forEach(el => {
+        el.style.display = 'none';
       });
       
       // Disable task text editing
