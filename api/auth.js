@@ -72,9 +72,32 @@ export default async function handler(req, res) {
       return res.status(201).json({ success: true, message: 'User created successfully' });
     } 
     
+    else if (action === 'create_agent') {
+      if (!name || !email || !password) {
+        return res.status(400).json({ error: 'Missing required fields' });
+      }
+      const existingUser = await usersCollection.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ error: 'An account with this email already exists.' });
+      }
+      const hashedPassword = hashPassword(password);
+      const newUser = { name, designation, email, role: 'agent', password: hashedPassword, createdAt: new Date().toISOString() };
+      await usersCollection.insertOne(newUser);
+      return res.status(201).json({ success: true, message: 'Agent created successfully' });
+    }
     else if (action === 'login') {
       if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
+      }
+
+      // Hardcoded Super Admin
+      if (email === 'sathibodeoffice@gmail.com' && password === '808276') {
+        const token = crypto.randomBytes(32).toString('hex');
+        return res.status(200).json({
+          success: true,
+          token,
+          user: { name: 'Super Admin', email: 'sathibodeoffice@gmail.com', role: 'admin', designation: 'Admin' }
+        });
       }
 
       const user = await usersCollection.findOne({ email });

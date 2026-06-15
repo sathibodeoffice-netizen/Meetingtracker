@@ -2163,19 +2163,14 @@ body.light-theme .dept-input-form select {
         const addTasksDesc = document.querySelector('#view-add-tasks p');
         if (addTasksDesc) addTasksDesc.textContent = "View tasks and add remarks for your department.";
         
-        const quickAddForm = document.getElementById('add-task-form');
-        if (quickAddForm) quickAddForm.style.display = 'none';
+        const navSettings = document.getElementById('nav-settings');
+        if (navSettings) navSettings.style.display = 'none';
         
         const newMeetingBtn = document.getElementById('btn-new-meeting');
         if (newMeetingBtn) newMeetingBtn.style.display = 'none';
         
-        document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn, .priority-badge-select, .priority-badge, .dept-input-form, .dept-input-task-right, .task-item-right, .timeline-task-right, .assignee-badge').forEach(el => {
+        document.querySelectorAll('.delete-task-btn, .delete-dept-task-btn, .btn.danger, .clear-all-btn, .task-item-right, .timeline-task-right').forEach(el => {
           el.style.display = 'none';
-        });
-        
-        // Disable contenteditable on task text for agents
-        document.querySelectorAll('.task-text, .editable-dept-task-text, .editable-archive-task-text').forEach(el => {
-          el.removeAttribute('contenteditable');
         });
       }
     }
@@ -2239,8 +2234,8 @@ body.light-theme .dept-input-form select {
           All Meetings
         </button>
         <button class="nav-item" id="nav-settings" data-tab="settings">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Backup & Restore
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+          Manage Agents
         </button>
       </nav>
 
@@ -2517,69 +2512,38 @@ body.light-theme .dept-input-form select {
           </div>
         </section>
 
-        <!-- SETTINGS / BACKUP & RESTORE VIEW -->
+        <!-- SETTINGS / MANAGE AGENTS VIEW -->
         <section class="tab-view hidden" id="view-settings">
           <div class="view-header">
-            <h1>Backup & Restore</h1>
-            <p>Meeting Tracker stores all your data in your browser's local cache. Export backups regularly to ensure you never lose your task history.</p>
+            <h1>Manage Agents</h1>
+            <p>Create and manage agent accounts. Agents can view meetings, create tasks, and mark them as complete, but cannot delete or create meetings.</p>
           </div>
 
-          <div class="settings-grid">
-            <div class="settings-card glass-panel">
-              <div class="card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              </div>
+          <div class="settings-grid" style="display: block;">
+            <div class="settings-card glass-panel" style="max-width: 600px; margin: 0 auto;">
               <div class="card-content">
-                <h2>Export Backup File</h2>
-                <p>Download a JSON backup file of all meetings, action items, and status history. You can use this file to restore your tracker on another browser or device.</p>
-                <button class="btn btn-primary" id="btn-export-backup">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  Export Backup (.json)
-                </button>
-              </div>
-            </div>
-
-            <div class="settings-card glass-panel">
-              <div class="card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-              </div>
-              <div class="card-content">
-                <h2>Export Shareable HTML App</h2>
-                <p>Download a single, self-contained HTML file containing this app and all your current meetings and tasks. You can send this file to anyone, and they will see your data instantly without importing anything.</p>
-                <button class="btn btn-primary" id="btn-export-shareable" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                  Export Shareable HTML
-                </button>
-              </div>
-            </div>
-
-            <div class="settings-card glass-panel">
-              <div class="card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              </div>
-              <div class="card-content">
-                <h2>Restore From Backup</h2>
-                <p>Upload a previously exported JSON backup file. This will restore all meetings and task history. <strong>Warning:</strong> This will overwrite your current tracker state.</p>
-                <label for="import-file" class="btn btn-success custom-file-upload">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  Select & Import Backup File
-                </label>
-                <input type="file" id="import-file" accept=".json" style="display: none;">
-                <span id="import-status-text" class="status-msg">No file selected</span>
-              </div>
-            </div>
-
-            <div class="settings-card glass-panel danger-card">
-              <div class="card-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-danger"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              </div>
-              <div class="card-content">
-                <h2>Clear All Data</h2>
-                <p>Permanently delete all meetings, notes, and task records from your local storage. This action is irreversible.</p>
-                <button class="btn btn-danger" id="btn-clear-all">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-                  Clear All Tracker Data
-                </button>
+                <h2>Create New Agent</h2>
+                <div class="form-group" style="margin-top: 16px;">
+                  <label for="agent-name">Full Name</label>
+                  <input type="text" id="agent-name" class="text-input" placeholder="e.g. John Doe">
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                  <label for="agent-designation">Designation / Display Tag</label>
+                  <input type="text" id="agent-designation" class="text-input" placeholder="e.g. @john">
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                  <label for="agent-email">Email Address</label>
+                  <input type="email" id="agent-email" class="text-input" placeholder="agent@example.com">
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                  <label for="agent-password">Password</label>
+                  <input type="password" id="agent-password" class="text-input" placeholder="Enter a secure password">
+                </div>
+                <div style="margin-top: 24px;">
+                  <button class="btn btn-primary" id="btn-create-agent" style="width: 100%; justify-content: center;">
+                    Create Agent Account
+                  </button>
+                </div>
               </div>
             </div>
           </div>
