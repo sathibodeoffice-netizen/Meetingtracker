@@ -23,7 +23,7 @@ function hashPassword(password) {
 
 export default async function handler(req, res) {
   if (!clientPromise) {
-    return res.status(500).json({ error: 'Database connection is not configured on the server.' });
+    return res.status(500).json({ error: 'সার্ভারে ডাটাবেজ কানেকশন কনফিগার করা নেই।' });
   }
 
   // Set CORS headers
@@ -48,13 +48,13 @@ export default async function handler(req, res) {
 
     if (action === 'signup') {
       if (!name || !email || !password || !role) {
-        return res.status(400).json({ error: 'Missing required fields' });
+        return res.status(400).json({ error: 'প্রয়োজনীয় তথ্য দেওয়া হয়নি' });
       }
 
       // Check if user already exists
       const existingUser = await usersCollection.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ error: 'An account with this email already exists.' });
+        return res.status(400).json({ error: 'এই ইমেইল দিয়ে ইতিপূর্বে একটি অ্যাকাউন্ট তৈরি করা হয়েছে।' });
       }
 
       // Create new user
@@ -74,11 +74,11 @@ export default async function handler(req, res) {
     
     else if (action === 'create_agent') {
       if (!name || !email || !password) {
-        return res.status(400).json({ error: 'Missing required fields' });
+        return res.status(400).json({ error: 'প্রয়োজনীয় তথ্য দেওয়া হয়নি' });
       }
       const existingUser = await usersCollection.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ error: 'An account with this email already exists.' });
+        return res.status(400).json({ error: 'এই ইমেইল দিয়ে ইতিপূর্বে একটি অ্যাকাউন্ট তৈরি করা হয়েছে।' });
       }
       const hashedPassword = hashPassword(password);
       const newUser = { name, designation, email, role: 'agent', password: hashedPassword, createdAt: new Date().toISOString() };
@@ -87,7 +87,7 @@ export default async function handler(req, res) {
     }
     else if (action === 'login') {
       if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password are required' });
+        return res.status(400).json({ error: 'ইমেইল এবং পাসওয়ার্ড আবশ্যক' });
       }
 
       // Hardcoded Super Admin
@@ -102,12 +102,12 @@ export default async function handler(req, res) {
 
       const user = await usersCollection.findOne({ email });
       if (!user) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+        return res.status(401).json({ error: 'ভুল ইমেইল বা পাসওয়ার্ড' });
       }
 
       const hashedPassword = hashPassword(password);
       if (user.password !== hashedPassword) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+        return res.status(401).json({ error: 'ভুল ইমেইল বা পাসওয়ার্ড' });
       }
 
       // Generate a simple token (in production, use JWT)

@@ -29,7 +29,7 @@ module.exports = async function handler(req, res) {
   }
 
   if (!uri || (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://'))) {
-    return res.status(500).json({ error: 'Database connection string is invalid. Please use the correct MONGODB_URI.' });
+    return res.status(500).json({ error: 'ডাটাবেজ কানেকশন স্ট্রিংটি সঠিক নয়। অনুগ্রহ করে সঠিক MONGODB_URI ব্যবহার করুন।' });
   }
 
   try {
@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
       const meetingsData = req.body; 
       
       if (!Array.isArray(meetingsData)) {
-        return res.status(400).json({ error: 'Expected an array of meetings' });
+        return res.status(400).json({ error: 'মিটিং সমূহের একটি অ্যারে প্রত্যাশিত' });
       }
 
       // To mirror localStorage behavior exactly, we clear the collection and insert the new state
@@ -70,6 +70,6 @@ module.exports = async function handler(req, res) {
     }
   } catch (error) {
     console.error('Database Error:', error);
-    return res.status(500).json({ error: 'Internal Server Error', details: error.message || error.toString() });
+    return res.status(500).json({ error: 'অভ্যন্তরীণ সার্ভার ত্রুটি', details: error.message || error.toString() });
   }
 }

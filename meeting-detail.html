@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মিটিং বিস্তারিত — মিটিং ট্র্যাকার</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+  <style>
+    /* ── Remarks auto-save indicator ── */
+    .remarks-saved {
+      font-size: 10px;
+      color: var(--emerald);
+      opacity: 0;
+      transition: opacity 0.3s;
+      margin-left: 6px;
+    }
+    .remarks-saved.visible { opacity: 1; }
+
+    /* ── Task filter pills ── */
+    .task-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .task-filter-pill {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      background: var(--bg-elevated);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .task-filter-pill:hover { border-color: rgba(139,92,246,0.3); }
+    .task-filter-pill.active {
+      background: rgba(139,92,246,0.14);
+      border-color: rgba(139,92,246,0.3);
+      color: var(--violet-2);
+    }
+    .task-filter-pill.pill-done.active { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: var(--emerald); }
+    .task-filter-pill.pill-open.active { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); color: var(--amber); }
+
+    /* ── Empty dept state ── */
+    .dept-empty {
+      font-size: 12px;
+      color: var(--text-3);
+      font-style: italic;
+      padding: 12px 0 4px;
+    }
+
+    /* ── Remarks block subtle bg when incomplete ── */
+    .task-item.is-open .task-remarks-block {
+      background: rgba(245,158,11,0.04);
+      border: 1px solid rgba(245,158,11,0.12);
+      border-radius: var(--r-sm);
+      padding: 8px;
+      margin-top: 8px;
+    }
+    .task-item.is-open .task-remarks-label {
+      color: var(--amber);
+      opacity: 0.8;
+    }
+
+    /* Completion ring on done task */
+    .task-complete-ring {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1px;
+    }
+    body.light .task-complete-ring { border-color: rgba(0,0,0,0.15); }
+    .task-complete-ring:hover { border-color: var(--emerald); }
+    .task-complete-ring.done { background: var(--emerald); border-color: var(--emerald); }
+    .task-complete-ring.done svg { display: block; }
+    .task-complete-ring svg { display: none; }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+      </div>
+      <span class="sidebar-brand-name">মিটিং ট্র্যাকার</span>
+    </div>
+    <nav class="nav">
+      <a class="nav-link" href="dashboard.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        ড্যাশবোর্ড
+      </a>
+      <a class="nav-link active" href="meetings.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        সব মিটিং
+      </a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-footer">
+      <span class="sidebar-footer-text">© ২০২৬ মিটিং ট্র্যাকার</span>
+      <button class="btn-theme" id="btn-theme" title="থিম পরিবর্তন">
+        <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <div class="detail-breadcrumb" style="font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <a href="meetings.html" style="color:var(--text-3);transition:color 0.2s;" onmouseover="this.style.color='var(--violet-2)'" onmouseout="this.style.color='var(--text-3)'">সব মিটিং</a>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span id="breadcrumb-title">মিটিং বিস্তারিত</span>
+        </div>
+        <div class="topbar-title" id="page-title">লোড হচ্ছে...</div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost" id="btn-edit-meeting">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          মিটিং সম্পাদনা
+        </button>
+        <button class="btn btn-primary" id="btn-add-task">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          টাস্ক যোগ করুন
+        </button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <!-- Meeting Info Banner -->
+      <div id="meeting-banner" style="display:none;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:24px;">
+        <div style="display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">তারিখ ও সময়</div>
+            <div style="font-size:14px;font-weight:600;" id="banner-datetime">—</div>
+          </div>
+          <div style="flex:2;min-width:200px;">
+            <div style="font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">এজেন্ডা / নোট</div>
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6;" id="banner-desc">—</div>
+          </div>
+          <div style="min-width:160px;">
+            <div style="font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">অগ্রগতি</div>
+            <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;" id="banner-pct">0%</div>
+            <div class="progress-bg" style="margin-top:8px;">
+              <div class="progress-fill progress-emerald" id="banner-bar" style="width:0%"></div>
+            </div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:6px;" id="banner-counts">0/0 টাস্ক সম্পন্ন</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Filters -->
+      <div class="task-filter-row">
+        <button class="task-filter-pill active" data-filter="all">সব টাস্ক</button>
+        <button class="task-filter-pill pill-open" data-filter="open">⏳ চলমান</button>
+        <button class="task-filter-pill pill-done" data-filter="done">✓ সম্পন্ন</button>
+      </div>
+
+      <!-- Department Task Sections -->
+      <div id="dept-sections"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal-backdrop" id="task-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title" id="task-modal-heading">নতুন টাস্ক যোগ করুন</span>
+      <button class="btn-icon" id="t-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="task-form" class="form-grid">
+        <input type="hidden" id="t-id">
+        <input type="hidden" id="t-meeting-id">
+        <div class="form-group">
+          <label class="form-label" for="t-title">টাস্কের শিরোনাম *</label>
+          <input class="form-input" id="t-title" type="text" placeholder="যেমন: মাসিক রিপোর্ট তৈরি করা" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="t-desc">বিবরণ (ঐচ্ছিক)</label>
+          <textarea class="form-textarea" id="t-desc" rows="2" placeholder="টাস্কের বিস্তারিত বিবরণ লিখুন..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="t-dept">বিভাগ *</label>
+            <select class="form-select" id="t-dept"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="t-priority">গুরুত্ব</label>
+            <select class="form-select" id="t-priority">
+              <option value="high">অধিক জরুরি 🔴</option>
+              <option value="medium" selected>মাঝারি 🟡</option>
+              <option value="low">কম জরুরি 🟢</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="t-assignee">দায়িত্বপ্রাপ্ত কর্মী</label>
+          <input class="form-input" id="t-assignee" type="text" placeholder="যেমন: রাহেলা বেগম">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="t-cancel">বাতিল</button>
+      <button class="btn btn-primary" type="submit" form="task-form">সংরক্ষণ করুন</button>
+    </div>
+  </div>
+</div>
+
+<!-- Meeting Edit Modal -->
+<div class="modal-backdrop" id="meeting-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-heading">মিটিং সম্পাদনা</span>
+      <button class="btn-icon" id="m-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="meeting-form" class="form-grid">
+        <input type="hidden" id="m-id">
+        <div class="form-group">
+          <label class="form-label" for="m-title">মিটিংয়ের শিরোনাম *</label>
+          <input class="form-input" id="m-title" type="text" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="m-date">তারিখ *</label>
+            <input class="form-input" id="m-date" type="date" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="m-time">সময় *</label>
+            <input class="form-input" id="m-time" type="time" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="m-desc">এজেন্ডা / নোট</label>
+          <textarea class="form-textarea" id="m-desc" rows="3"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="m-delete" style="margin-right:auto;display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        মিটিং মুছুন
+      </button>
+      <button class="btn btn-secondary" id="m-cancel">বাতিল</button>
+      <button class="btn btn-primary" type="submit" form="meeting-form">আপডেট করুন</button>
+    </div>
+  </div>
+</div>
+
+<div id="app-toast" class="toast"></div>
+
+<script>
+// ── State ────────────────────────────────────────────────────
+let meeting = null;
+let activeFilter = 'all'; // 'all' | 'open' | 'done'
+let openTaskModal;
+let openMeetingModal;
+
+// ── Init ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  wireGlobal(() => {}); // theme only
+
+  // Populate dept select
+  const selDept = document.getElementById('t-dept');
+  DEPARTMENTS.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.key;
+    opt.textContent = `${d.icon} ${d.label}`;
+    selDept.appendChild(opt);
+  });
+
+  // Filter pills
+  document.querySelectorAll('.task-filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.task-filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeFilter = pill.dataset.filter;
+      renderDepts();
+    });
+  });
+
+  // Get meeting ID from URL
+  const params = new URLSearchParams(window.location.search);
+  const mid = params.get('id');
+  if (!mid) { window.location.replace('meetings.html'); return; }
+
+  await APP.load();
+  meeting = APP.meetings.find(m => m.id === mid);
+  if (!meeting) { window.location.replace('meetings.html'); return; }
+
+  // Populate page
+  document.title = `${meeting.title} — মিটিং ট্র্যাকার`;
+  document.getElementById('page-title').textContent = meeting.title;
+  document.getElementById('breadcrumb-title').textContent = meeting.title;
+
+  // Task modal
+  openTaskModal = createTaskModal((updatedMeeting) => {
+    meeting = updatedMeeting;
+    renderAll();
+  });
+
+  // Meeting modal
+  openMeetingModal = createMeetingModal(
+    (updated) => {
+      meeting = updated;
+      document.getElementById('page-title').textContent = meeting.title;
+      document.getElementById('breadcrumb-title').textContent = meeting.title;
+      renderAll();
+    },
+    (id) => {
+      APP.meetings = APP.meetings.filter(m => m.id !== id);
+      APP.save();
+      window.location.replace('meetings.html');
+    }
+  );
+
+  document.getElementById('btn-add-task').addEventListener('click', () => openTaskModal(meeting.id, null));
+  document.getElementById('btn-edit-meeting').addEventListener('click', () => openMeetingModal(meeting));
+
+  renderAll();
+});
+
+// ── Render ───────────────────────────────────────────────────
+function renderAll() {
+  renderBanner();
+  renderDepts();
+}
+
+function renderBanner() {
+  if (!meeting) return;
+  const banner = document.getElementById('meeting-banner');
+  banner.style.display = 'block';
+
+  const dateObj = new Date(meeting.date);
+  const dateStr = dateObj.toLocaleDateString('bn-BD', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  let timeStr = meeting.time || '';
+  try {
+    const [h, m] = meeting.time.split(':');
+    const hr = parseInt(h);
+    timeStr = `${hr % 12 || 12}:${m} ${hr >= 12 ? 'PM' : 'AM'}`;
+  } catch(e) {}
+
+  document.getElementById('banner-datetime').textContent = `${dateStr} · ${timeStr}`;
+  document.getElementById('banner-desc').textContent = meeting.description || 'কোনো এজেন্ডা বা নোট সংরক্ষিত নেই।';
+
+  const tasks = meeting.tasks || [];
+  const done = tasks.filter(t => t.completed).length;
+  const total = tasks.length;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+
+  document.getElementById('banner-pct').textContent = pct + '%';
+  document.getElementById('banner-bar').style.width = pct + '%';
+  document.getElementById('banner-counts').textContent = `${done}/${total} টাস্ক সম্পন্ন`;
+}
+
+function renderDepts() {
+  if (!meeting) return;
+  const container = document.getElementById('dept-sections');
+  const allTasks = meeting.tasks || [];
+
+  // Filter by activeFilter
+  let visibleTasks = allTasks;
+  if (activeFilter === 'open') visibleTasks = allTasks.filter(t => !t.completed);
+  else if (activeFilter === 'done') visibleTasks = allTasks.filter(t => t.completed);
+
+  if (visibleTasks.length === 0 && allTasks.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">📋</div>
+        <h3>এই মিটিংয়ে কোনো টাস্ক নেই</h3>
+        <p>উপরে "টাস্ক যোগ করুন" বাটনে ক্লিক করে প্রথম টাস্ক তৈরি করুন।</p>
+      </div>`;
+    return;
+  }
+
+  if (visibleTasks.length === 0) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🔍</div>
+        <h3>এই ফিল্টারে কোনো টাস্ক নেই</h3>
+        <p>ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন।</p>
+      </div>`;
+    return;
+  }
+
+  // Group by department
+  const tasksByDept = {};
+  DEPARTMENTS.forEach(d => { tasksByDept[d.key] = []; });
+  visibleTasks.forEach(t => {
+    const k = t.department || 'general';
+    if (!tasksByDept[k]) tasksByDept[k] = [];
+    tasksByDept[k].push(t);
+  });
+
+  let html = '';
+  DEPARTMENTS.forEach(dept => {
+    const dTasks = tasksByDept[dept.key];
+    if (!dTasks || dTasks.length === 0) return;
+
+    const doneCnt = dTasks.filter(t => t.completed).length;
+    const totalCnt = dTasks.length;
+    const dPct = Math.round(doneCnt / totalCnt * 100);
+
+    html += `
+      <div class="dept-section" data-dept="${dept.key}">
+        <div class="dept-header" onclick="toggleDept('${dept.key}', this)">
+          <span class="dept-icon">${dept.icon}</span>
+          <span class="dept-name">${dept.label}</span>
+          <div class="dept-stats">
+            <span class="dept-count">${doneCnt}/${totalCnt} · ${dPct}%</span>
+            <div style="width:60px;" class="progress-bg">
+              <div class="progress-fill progress-emerald" style="width:${dPct}%"></div>
+            </div>
+          </div>
+          <svg class="dept-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="dept-task-list">
+          ${dTasks.map(t => buildTaskItem(t)).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('.task-complete-ring').forEach(ring => {
+    ring.addEventListener('click', () => toggleTask(ring.dataset.id));
+  });
+
+  container.querySelectorAll('.task-edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = (meeting.tasks || []).find(x => x.id === btn.dataset.id);
+      if (t) openTaskModal(meeting.id, t);
+    });
+  });
+
+  container.querySelectorAll('.task-del-btn').forEach(btn => {
+    btn.addEventListener('click', () => deleteTask(btn.dataset.id));
+  });
+
+  container.querySelectorAll('.task-remarks-input').forEach(input => {
+    input.addEventListener('change', () => saveRemarks(input.dataset.id, input.value));
+    input.addEventListener('input', () => {
+      const saved = input.closest('.task-item').querySelector('.remarks-saved');
+      if (saved) { saved.classList.remove('visible'); }
+    });
+  });
+}
+
+function buildTaskItem(t) {
+  const priBadge = `<span class="badge ${PRIORITY_BADGE[t.priority] || 'badge-medium'}">${PRIORITY_LABELS[t.priority] || ''}</span>`;
+  const dept = getDept(t.department || 'general');
+
+  const remarksBlock = `
+    <div class="task-remarks-block">
+      <div style="display:flex;align-items:center;">
+        <span class="task-remarks-label">${t.completed ? '📝 মন্তব্য' : '⚠️ অসম্পন্নের কারণ / মন্তব্য'}</span>
+        <span class="remarks-saved" id="saved-${t.id}">✓ সংরক্ষিত</span>
+      </div>
+      <textarea
+        class="task-remarks-input"
+        data-id="${t.id}"
+        placeholder="${t.completed ? 'মিটিং নোট বা অতিরিক্ত মন্তব্য...' : 'কেন সম্পন্ন হয়নি? কোনো বাধা আছে? পরবর্তী পদক্ষেপ কী?'}"
+        rows="2"
+      >${escapeHTML(t.remarks || '')}</textarea>
+    </div>
+  `;
+
+  return `
+    <div class="task-item ${t.completed ? 'is-done' : 'is-open'}" data-id="${t.id}">
+      <div class="task-row-top">
+        <div class="task-complete-ring ${t.completed ? 'done' : ''}" data-id="${t.id}" title="${t.completed ? 'অসম্পন্ন চিহ্নিত করুন' : 'সম্পন্ন চিহ্নিত করুন'}">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="task-text-block">
+          <div class="task-title">${escapeHTML(t.title)}</div>
+          ${t.description ? `<div class="task-desc">${escapeHTML(t.description)}</div>` : ''}
+          <div class="task-meta">
+            ${priBadge}
+            ${t.assignee ? `<span class="task-assignee"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${escapeHTML(t.assignee)}</span>` : ''}
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button class="btn-icon task-edit-btn" data-id="${t.id}" title="সম্পাদনা">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
+          <button class="btn-icon danger task-del-btn" data-id="${t.id}" title="মুছুন">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+      ${remarksBlock}
+    </div>
+  `;
+}
+
+// ── Actions ──────────────────────────────────────────────────
+function toggleTask(taskId) {
+  const task = (meeting.tasks || []).find(t => t.id === taskId);
+  if (!task) return;
+  task.completed = !task.completed;
+  APP.save();
+  showToast(task.completed ? '✓ টাস্ক সম্পন্ন হয়েছে' : 'টাস্ক পুনরায় চালু হয়েছে');
+  renderAll();
+}
+
+function deleteTask(taskId) {
+  if (!confirm('এই টাস্কটি মুছে ফেলবেন?')) return;
+  meeting.tasks = (meeting.tasks || []).filter(t => t.id !== taskId);
+  APP.save();
+  showToast('টাস্ক মুছে ফেলা হয়েছে');
+  renderAll();
+}
+
+function saveRemarks(taskId, value) {
+  const task = (meeting.tasks || []).find(t => t.id === taskId);
+  if (!task) return;
+  task.remarks = value.trim();
+  APP.save();
+  const savedEl = document.getElementById(`saved-${taskId}`);
+  if (savedEl) {
+    savedEl.classList.add('visible');
+    setTimeout(() => savedEl.classList.remove('visible'), 2500);
+  }
+}
+
+function toggleDept(key, headerEl) {
+  const section = headerEl.closest('.dept-section');
+  section.classList.toggle('collapsed');
+}
+</script>
+</body>
+</html>

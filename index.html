@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meeting Tracker - Login</title>
+  <title>মিটিং ট্র্যাকার - লগইন</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Hind Siliguri', 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Hind Siliguri', sans-serif;
     }
     body {
       background-color: var(--bg-body);
@@ -184,7 +184,7 @@
             <path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/>
           </svg>
         </div>
-        <span class="brand-name">Meeting Tracker</span>
+        <span class="brand-name">মিটিং ট্র্যাকার</span>
       </div>
 
 
@@ -193,47 +193,47 @@
       <!-- LOGIN FORM -->
       <form id="form-login" onsubmit="handleLogin(event)" autocomplete="off">
         <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="login-email" required placeholder="Enter your email" autocomplete="new-password">
+          <label>ইমেইল ঠিকানা</label>
+          <input type="email" id="login-email" required placeholder="আপনার ইমেইল লিখুন" autocomplete="new-password">
         </div>
         <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="login-password" required placeholder="Enter your password" autocomplete="new-password">
+          <label>পাসওয়ার্ড</label>
+          <input type="password" id="login-password" required placeholder="আপনার পাসওয়ার্ড লিখুন" autocomplete="new-password">
         </div>
-        <button type="submit" class="btn" id="btn-login">Log In</button>
+        <button type="submit" class="btn" id="btn-login">লগইন করুন</button>
       </form>
 
       <!-- SIGNUP FORM -->
       <form id="form-signup" class="hidden" onsubmit="handleSignup(event)" autocomplete="off">
         <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="signup-name" required placeholder="John Doe" autocomplete="new-password">
+          <label>সম্পূর্ণ নাম</label>
+          <input type="text" id="signup-name" required placeholder="যেমন: রহিম মিয়া" autocomplete="new-password">
         </div>
         <div class="form-group">
-          <label>Designation (e.g., Customer Care)</label>
-          <input type="text" id="signup-designation" required placeholder="Agent Role Name" autocomplete="new-password">
+          <label>পদবি (যেমন: কাস্টমার কেয়ার)</label>
+          <input type="text" id="signup-designation" required placeholder="আপনার পদবি" autocomplete="new-password">
         </div>
         <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="signup-email" required placeholder="john@example.com" autocomplete="new-password">
+          <label>ইমেইল ঠিকানা</label>
+          <input type="email" id="signup-email" required placeholder="rahim@example.com" autocomplete="new-password">
         </div>
         <div class="form-group">
-          <label>Role</label>
+          <label>ভূমিকা</label>
           <select id="signup-role" required>
-            <option value="" disabled selected>Select Role</option>
-            <option value="agent">Agent</option>
-            <option value="admin">Admin</option>
+            <option value="" disabled selected>ভূমিকা নির্বাচন করুন</option>
+            <option value="agent">এজেন্ট</option>
+            <option value="admin">অ্যাডমিন</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="signup-password" required placeholder="Create a strong password" minlength="6">
+          <label>পাসওয়ার্ড</label>
+          <input type="password" id="signup-password" required placeholder="একটি শক্তিশালী পাসওয়ার্ড তৈরি করুন" minlength="6">
         </div>
         <div class="form-group">
-          <label>Confirm Password</label>
-          <input type="password" id="signup-confirm-password" required placeholder="Confirm your password" minlength="6">
+          <label>পাসওয়ার্ড নিশ্চিত করুন</label>
+          <input type="password" id="signup-confirm-password" required placeholder="পাসওয়ার্ডটি পুনরায় লিখুন" minlength="6">
         </div>
-        <button type="submit" class="btn" id="btn-signup">Create Account</button>
+        <button type="submit" class="btn" id="btn-signup">অ্যাকাউন্ট তৈরি করুন</button>
       </form>
 
     </div>
@@ -291,13 +291,13 @@
       const btn = document.getElementById('btn-signup');
 
       if (password !== confirmPassword) {
-        showMessage("Passwords do not match!", "error");
+        showMessage("পাসওয়ার্ড দুটি মেলেনি!", "error");
         return;
       }
 
       try {
         btn.disabled = true;
-        btn.textContent = "Creating Account...";
+        btn.textContent = "অ্যাকাউন্ট তৈরি হচ্ছে...";
         const res = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -306,17 +306,17 @@
         const data = await res.json();
 
         if (res.ok) {
-          showMessage("Account created successfully! You can now log in.", "success");
+          showMessage("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! আপনি এখন লগইন করতে পারেন।", "success");
           setTimeout(() => switchTab('login'), 2000);
           e.target.reset();
         } else {
-          showMessage(data.error || "Failed to create account.", "error");
+          showMessage(data.error || "অ্যাকাউন্ট তৈরি করতে ব্যর্থ হয়েছে।", "error");
         }
       } catch (err) {
-        showMessage("Network error. Please try again.", "error");
+        showMessage("নেটওয়ার্ক ত্রুটি। আবার চেষ্টা করুন।", "error");
       } finally {
         btn.disabled = false;
-        btn.textContent = "Create Account";
+        btn.textContent = "অ্যাকাউন্ট তৈরি করুন";
       }
     }
 
@@ -328,7 +328,7 @@
 
       try {
         btn.disabled = true;
-        btn.textContent = "Logging in...";
+        btn.textContent = "লগইন হচ্ছে...";
         const res = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -337,20 +337,20 @@
         const data = await res.json();
 
         if (res.ok) {
-          showMessage("Login successful! Redirecting...", "success");
+          showMessage("লগইন সফল! রিডাইরেক্ট করা হচ্ছে...", "success");
           localStorage.setItem('mt_token', data.token || 'logged_in');
           localStorage.setItem('mt_user', JSON.stringify(data.user));
           setTimeout(() => {
             window.location.href = '/dashboard.html';
           }, 1000);
         } else {
-          showMessage(data.error || "Invalid email or password.", "error");
+          showMessage(data.error || "ভুল ইমেইল বা পাসওয়ার্ড।", "error");
         }
       } catch (err) {
-        showMessage("Network error. Please try again.", "error");
+        showMessage("নেটওয়ার্ক ত্রুটি। আবার চেষ্টা করুন।", "error");
       } finally {
         btn.disabled = false;
-        btn.textContent = "Log In";
+        btn.textContent = "লগইন করুন";
       }
     }
   </script>
