@@ -91,14 +91,16 @@ const APP = {
 
   // Stats helpers
   taskStats(meetingList) {
-    let total = 0, done = 0;
+    let total = 0, done = 0, incomplete = 0;
     meetingList.forEach(m => {
       (m.tasks || []).forEach(t => {
         total++;
-        if (t.completed) done++;
+        const s = t.status || (t.completed ? 'done' : 'open');
+        if (s === 'done') done++;
+        else if (s === 'incomplete') incomplete++;
       });
     });
-    return { total, done, pending: total - done, rate: total > 0 ? Math.round((done / total) * 100) : 0 };
+    return { total, done, incomplete, pending: total - done - incomplete, rate: total > 0 ? Math.round((done / total) * 100) : 0 };
   },
 
   async load() {
@@ -299,6 +301,7 @@ function createTaskModal(onSave) {
         title, description: desc,
         department: dept, priority: pri,
         assignee: assn,
+        status: 'open',
         completed: false,
         remarks: '',
         createdAt: new Date().toISOString()

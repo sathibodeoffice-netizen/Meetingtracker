@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>মিটিং ট্র্যাকার — সব মিটিং</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238b5cf6'/%3E%3Crect x='6' y='8' width='20' height='18' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Cline x1='11' y1='6' x2='11' y2='11' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='21' y1='6' x2='21' y2='11' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='6' y1='15' x2='26' y2='15' stroke='white' stroke-width='2'/%3E%3Cpolyline points='11,19 14,22 21,17' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -199,7 +200,7 @@ function renderList() {
 
 function buildMeetingCard(m) {
   const tasks = m.tasks || [];
-  const done = tasks.filter(t => t.completed).length;
+  const done = tasks.filter(t => t.status === 'done' || (!t.status && t.completed)).length;
   const total = tasks.length;
   const pct = total > 0 ? Math.round(done / total * 100) : 0;
   const dateObj = new Date(m.date);
