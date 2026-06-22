@@ -7,13 +7,13 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238b5cf6'/%3E%3Crect x='6' y='8' width='20' height='18' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Cline x1='11' y1='6' x2='11' y2='11' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='21' y1='6' x2='21' y2='11' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='6' y1='15' x2='26' y2='15' stroke='white' stroke-width='2'/%3E%3Cpolyline points='11,19 14,22 21,17' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
   <style>
     /* ── Remarks auto-save indicator ── */
     .remarks-saved {
-      font-size: 10px;
+      font-size: 13px;
       color: var(--emerald);
       opacity: 0;
       transition: opacity 0.3s;
@@ -32,7 +32,7 @@
     .task-filter-pill {
       padding: 5px 14px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
       border: 1px solid var(--border);
       color: var(--text-2);
@@ -52,7 +52,7 @@
 
     /* ── Empty dept state ── */
     .dept-empty {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-3);
       font-style: italic;
       padding: 12px 0 4px;
@@ -153,7 +153,7 @@
   <div class="main">
     <header class="topbar">
       <div>
-        <div class="detail-breadcrumb" style="font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <div class="detail-breadcrumb" style="font-size:14px;color:var(--text-3);display:flex;align-items:center;gap:6px;margin-bottom:4px;">
           <a href="meetings.html" style="color:var(--text-3);transition:color 0.2s;" onmouseover="this.style.color='var(--violet-2)'" onmouseout="this.style.color='var(--text-3)'">সব মিটিং</a>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           <span id="breadcrumb-title">মিটিং বিস্তারিত</span>
@@ -181,20 +181,20 @@
       <div id="meeting-banner" style="display:none;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:24px;">
         <div style="display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
           <div style="flex:1;min-width:200px;">
-            <div style="font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">তারিখ ও সময়</div>
-            <div style="font-size:14px;font-weight:600;" id="banner-datetime">—</div>
+            <div style="font-size:13px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">তারিখ ও সময়</div>
+            <div style="font-size:16px;font-weight:600;" id="banner-datetime">—</div>
           </div>
           <div style="flex:2;min-width:200px;">
-            <div style="font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">এজেন্ডা / নোট</div>
-            <div style="font-size:13px;color:var(--text-2);line-height:1.6;" id="banner-desc">—</div>
+            <div style="font-size:13px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">এজেন্ডা / নোট</div>
+            <div style="font-size:15px;color:var(--text-2);line-height:1.65;" id="banner-desc">—</div>
           </div>
           <div style="min-width:160px;">
-            <div style="font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">অগ্রগতি</div>
+            <div style="font-size:13px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">অগ্রগতি</div>
             <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;" id="banner-pct">0%</div>
             <div class="progress-bg" style="margin-top:8px;">
               <div class="progress-fill progress-emerald" id="banner-bar" style="width:0%"></div>
             </div>
-            <div style="font-size:11px;color:var(--text-3);margin-top:6px;" id="banner-counts">0/0 টাস্ক সম্পন্ন</div>
+            <div style="font-size:13px;color:var(--text-3);margin-top:6px;" id="banner-counts">0/0 টাস্ক সম্পন্ন</div>
           </div>
         </div>
       </div>
@@ -546,7 +546,7 @@ function buildTaskItem(t) {
   const itemClass = status === 'done' ? 'is-done' : status === 'incomplete' ? 'is-incomplete' : 'is-open';
 
   const statusBadge = status === 'incomplete'
-    ? `<span style="font-size:10px;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:4px;padding:1px 6px;margin-left:6px;">অসম্পন্ন</span>`
+    ? `<span style="font-size:12px;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:4px;padding:2px 8px;margin-left:8px;">অসম্পন্ন</span>`
     : '';
 
   return `
@@ -703,10 +703,10 @@ function printMeeting() {
 <head>
   <meta charset="UTF-8">
   <title>\u09ae\u09bf\u099f\u09bf\u0982 \u09b0\u09bf\u09aa\u09cb\u09b0\u09cd\u099f \u2014 ${escapeHTML(meeting.title)}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Hind Siliguri', sans-serif; color: #111827; background: #fff; font-size: 10px; }
+    body { font-family: 'SolaimanLipi', sans-serif; color: #111827; background: #fff; font-size: 11px; }
     @page { size: A4 portrait; margin: 8mm 10mm; }
     table { border-collapse: collapse; }
   </style>

@@ -2,12 +2,12 @@
    মিটিং ট্র্যাকার — Premium Design System
    ========================================================================== */
 
-/* ── Google Font ── */
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+/* ── Bangla Font ── */
+@import url('https://fonts.maateen.me/solaiman-lipi/font.css');
 
 /* ── Theme Variables ── */
 :root {
-  --font: 'Hind Siliguri', sans-serif;
+  --font: 'SolaimanLipi', sans-serif;
 
   /* Dark theme (default) */
   --bg:           #0b0d17;
@@ -80,7 +80,8 @@ body {
   color: var(--text-1);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -131,7 +132,7 @@ body.light ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); }
   flex-shrink: 0;
 }
 .sidebar-brand-name {
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: -0.3px;
   background: linear-gradient(135deg, var(--text-1), var(--violet-2));
@@ -146,7 +147,7 @@ body.light ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); }
   gap: 12px;
   padding: 11px 14px;
   border-radius: var(--r-md);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 550;
   color: var(--text-2);
   transition: var(--transition);
@@ -172,7 +173,7 @@ body.light ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); }
   justify-content: space-between;
   align-items: center;
 }
-.sidebar-footer-text { font-size: 11px; color: var(--text-3); }
+.sidebar-footer-text { font-size: 13px; color: var(--text-3); }
 
 /* Theme toggle */
 .btn-theme {
@@ -209,8 +210,8 @@ body.light .icon-moon { display: block; }
   gap: 16px;
   flex-shrink: 0;
 }
-.topbar-title { font-size: 20px; font-weight: 700; }
-.topbar-sub { font-size: 13px; color: var(--text-3); margin-top: 1px; }
+.topbar-title { font-size: 22px; font-weight: 700; }
+.topbar-sub { font-size: 15px; color: var(--text-3); margin-top: 1px; }
 .topbar-right { display: flex; align-items: center; gap: 12px; }
 
 /* ── Page Content ── */
@@ -229,7 +230,7 @@ body.light .icon-moon { display: block; }
   padding: 0 20px;
   height: 40px;
   border-radius: var(--r-md);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   border: none;
   transition: var(--transition);
@@ -263,7 +264,7 @@ body.light .icon-moon { display: block; }
   border: 1px solid var(--border);
   padding: 0 14px;
   height: 34px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-1); }
 
@@ -280,7 +281,7 @@ body.light .icon-moon { display: block; }
 .btn-icon:hover { background: var(--bg-hover); color: var(--text-1); }
 .btn-icon.danger:hover { background: rgba(239,68,68,0.15); color: var(--red); border-color: rgba(239,68,68,0.3); }
 
-.btn-sm { height: 32px; padding: 0 14px; font-size: 12px; }
+.btn-sm { height: 32px; padding: 0 14px; font-size: 14px; }
 
 /* ── Cards ── */
 .card {
@@ -298,7 +299,7 @@ body.light .icon-moon { display: block; }
   justify-content: space-between;
   gap: 12px;
 }
-.card-title { font-size: 14px; font-weight: 700; }
+.card-title { font-size: 16px; font-weight: 700; }
 
 /* ── Glass Panel ── */
 .glass {
@@ -310,14 +311,14 @@ body.light .icon-moon { display: block; }
 
 /* ── Form Inputs ── */
 .form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-label { font-size: 12px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-label { font-size: 13px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.5px; }
 .form-input, .form-select, .form-textarea {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
   color: var(--text-1);
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 15px;
   padding: 10px 14px;
   transition: var(--transition);
   width: 100%;
@@ -366,7 +367,7 @@ body.light .checkbox-box { border-color: rgba(0,0,0,0.2); }
   gap: 4px;
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -395,7 +396,7 @@ body.light .badge-open   { color: #d97706; }
   color: #34d399;
   padding: 12px 24px;
   border-radius: 50px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   z-index: 9999;
   transition: transform 0.4s var(--ease), opacity 0.4s;
@@ -442,7 +443,7 @@ body.light .badge-open   { color: #d97706; }
   padding: 20px 24px;
   border-bottom: 1px solid var(--border);
 }
-.modal-title { font-size: 16px; font-weight: 700; }
+.modal-title { font-size: 18px; font-weight: 700; }
 .modal-body { padding: 24px; }
 .modal-footer {
   display: flex;
@@ -475,8 +476,8 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   color: var(--text-3);
 }
 .empty-icon { font-size: 48px; margin-bottom: 16px; }
-.empty h3 { font-size: 16px; color: var(--text-2); margin-bottom: 8px; font-weight: 600; }
-.empty p { font-size: 13px; line-height: 1.6; }
+.empty h3 { font-size: 18px; color: var(--text-2); margin-bottom: 8px; font-weight: 600; }
+.empty p { font-size: 14px; line-height: 1.7; }
 
 /* ── Divider ── */
 .divider { height: 1px; background: var(--border); margin: 20px 0; }
@@ -518,7 +519,7 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   color: var(--stat-color, var(--violet));
 }
 .stat-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
-.stat-label { font-size: 12px; color: var(--text-2); font-weight: 500; }
+.stat-label { font-size: 13px; color: var(--text-2); font-weight: 500; }
 
 /* Stat color variants */
 .stat-violet { --stat-color: var(--violet); --stat-bg: rgba(139,92,246,0.12); }
@@ -540,8 +541,8 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   padding: 20px;
 }
 .chart-header { margin-bottom: 16px; }
-.chart-title { font-size: 14px; font-weight: 700; }
-.chart-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.chart-title { font-size: 16px; font-weight: 700; }
+.chart-sub { font-size: 13px; color: var(--text-3); margin-top: 2px; }
 
 /* Donut */
 .donut-wrap { position: relative; display: inline-flex; }
@@ -551,9 +552,9 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   pointer-events: none;
 }
 .donut-pct { font-size: 24px; font-weight: 800; line-height: 1; }
-.donut-sub { font-size: 10px; color: var(--text-3); }
+.donut-sub { font-size: 12px; color: var(--text-3); }
 .donut-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
-.legend-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.legend-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .legend-val { margin-left: auto; font-weight: 700; }
 
@@ -585,14 +586,14 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   padding: 8px 4px;
 }
 .meeting-date-day { font-size: 22px; font-weight: 800; line-height: 1; color: var(--violet-2); }
-.meeting-date-mon { font-size: 10px; color: var(--text-3); margin-top: 2px; font-weight: 600; text-transform: uppercase; }
+.meeting-date-mon { font-size: 11px; color: var(--text-3); margin-top: 2px; font-weight: 600; text-transform: uppercase; }
 .meeting-info { flex: 1; min-width: 0; }
-.meeting-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meeting-meta { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.meeting-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meeting-meta { font-size: 13px; color: var(--text-3); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .meeting-meta span { display: flex; align-items: center; gap: 4px; }
 .meeting-progress-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
 .meeting-progress-bar { flex: 1; }
-.meeting-progress-text { font-size: 11px; color: var(--text-3); white-space: nowrap; font-weight: 600; }
+.meeting-progress-text { font-size: 13px; color: var(--text-3); white-space: nowrap; font-weight: 600; }
 .meeting-actions { flex-shrink: 0; display: flex; align-items: center; gap: 8px; }
 
 /* ── Department Section ── */
@@ -609,9 +610,9 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   cursor: pointer;
 }
 .dept-icon { font-size: 18px; flex-shrink: 0; }
-.dept-name { font-size: 13px; font-weight: 700; flex: 1; }
+.dept-name { font-size: 14px; font-weight: 700; flex: 1; }
 .dept-stats { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-.dept-count { font-size: 11px; color: var(--text-3); }
+.dept-count { font-size: 12px; color: var(--text-3); }
 .dept-chevron { color: var(--text-3); transition: transform 0.2s; }
 .dept-section.collapsed .dept-chevron { transform: rotate(-90deg); }
 .dept-section.collapsed .dept-task-list { display: none; }
@@ -634,22 +635,22 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
 }
 .task-text-block { flex: 1; min-width: 0; }
 .task-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.55;
   word-break: break-word;
 }
 .task-item.is-done .task-title { text-decoration: line-through; color: var(--text-3); }
-.task-desc { font-size: 12px; color: var(--text-2); margin-top: 3px; line-height: 1.5; }
-.task-meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.task-desc { font-size: 14px; color: var(--text-2); margin-top: 4px; line-height: 1.65; }
+.task-meta { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
 .task-assignee {
-  font-size: 11px; color: var(--text-3);
+  font-size: 13px; color: var(--text-3);
   display: flex; align-items: center; gap: 4px;
 }
 
 /* Remarks field */
-.task-remarks-block { margin-top: 10px; }
-.task-remarks-label { font-size: 11px; font-weight: 700; color: var(--text-3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.task-remarks-block { margin-top: 12px; }
+.task-remarks-label { font-size: 12px; font-weight: 700; color: var(--text-3); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
 .task-remarks-input {
   width: 100%;
   background: var(--bg);
@@ -657,11 +658,11 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   border-radius: var(--r-sm);
   color: var(--text-1);
   font-family: var(--font);
-  font-size: 12px;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 10px 12px;
   resize: none;
-  min-height: 56px;
-  line-height: 1.5;
+  min-height: 64px;
+  line-height: 1.65;
   transition: var(--transition);
   outline: none;
 }
@@ -693,12 +694,12 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   transition: var(--transition);
 }
 .year-nav-btn:hover { background: var(--bg-hover); color: var(--text-1); }
-.year-display { font-size: 14px; font-weight: 700; padding: 0 12px; color: var(--text-1); }
+.year-display { font-size: 15px; font-weight: 700; padding: 0 12px; color: var(--text-1); }
 .month-pills { display: flex; gap: 6px; flex-wrap: wrap; }
 .month-pill {
   padding: 5px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   border: 1px solid var(--border);
   color: var(--text-2);
@@ -729,13 +730,13 @@ body.light .progress-bg { background: rgba(0,0,0,0.06); }
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
 }
-.detail-breadcrumb { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 6px; }
+.detail-breadcrumb { font-size: 13px; color: var(--text-3); display: flex; align-items: center; gap: 6px; }
 .detail-breadcrumb a:hover { color: var(--violet-2); }
-.detail-meeting-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+.detail-meeting-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
 .detail-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
-.detail-meta-item { font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 6px; }
+.detail-meta-item { font-size: 14px; color: var(--text-2); display: flex; align-items: center; gap: 6px; }
 .detail-progress-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
-.detail-progress-text { font-size: 13px; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+.detail-progress-text { font-size: 14px; font-weight: 600; color: var(--text-2); white-space: nowrap; }
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {
