@@ -108,7 +108,21 @@ const APP = {
       const res = await fetch('/api/meetings');
       if (!res.ok) throw new Error('API error');
       const data = await res.json();
-      this.meetings = Array.isArray(data) ? data : [];
+      const raw = Array.isArray(data) ? data : [];
+      // Deduplicate by app-level id — keeps only the first occurrence.
+      // This self-heals any duplicate entries already in the database;
+      // the next save() will write back the clean deduplicated array.
+      const seen = new Set();
+      this.meetings = raw.filter(m => {
+        if (!m.id || seen.has(m.id)) return false;
+        seen.add(m.id);
+        return true;
+      });
+      // If we found duplicates, immediately persist the clean state
+      if (this.meetings.length < raw.length) {
+        console.warn(`Deduplicated ${raw.length - this.meetings.length} duplicate meeting(s) from DB.`);
+        this.save();
+      }
     } catch (e) {
       console.warn('Could not load from DB:', e);
       this.meetings = [];
