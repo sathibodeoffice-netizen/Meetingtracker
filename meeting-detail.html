@@ -169,6 +169,10 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           মিটিং সম্পাদনা
         </button>
+        <button class="btn btn-danger" id="btn-delete-meeting" style="display:none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          মিটিং মুছুন
+        </button>
         <button class="btn btn-primary" id="btn-add-task">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           টাস্ক যোগ করুন
@@ -374,6 +378,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('btn-add-task').addEventListener('click', () => openTaskModal(meeting.id, null));
   document.getElementById('btn-edit-meeting').addEventListener('click', () => openMeetingModal(meeting));
 
+  // Direct delete button in topbar
+  const btnDeleteMeeting = document.getElementById('btn-delete-meeting');
+  btnDeleteMeeting.style.display = 'inline-flex';
+  btnDeleteMeeting.addEventListener('click', () => {
+    if (!confirm('এই মিটিং এবং এর সমস্ত টাস্ক মুছে ফেলবেন? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।')) return;
+    APP.meetings = APP.meetings.filter(m => m.id !== meeting.id);
+    APP.save();
+    showToast('মিটিং মুছে ফেলা হয়েছে');
+    setTimeout(() => window.location.replace('meetings.html'), 800);
+  });
+
   renderAll();
 });
 
@@ -500,10 +515,14 @@ function renderDepts() {
   });
 
   container.querySelectorAll('.task-remarks-input').forEach(input => {
+    let _debounceTimer;
     input.addEventListener('change', () => saveRemarks(input.dataset.id, input.value));
     input.addEventListener('input', () => {
       const saved = input.closest('.task-item').querySelector('.remarks-saved');
       if (saved) { saved.classList.remove('visible'); }
+      // Debounced auto-save on typing (1.5s after last keystroke)
+      clearTimeout(_debounceTimer);
+      _debounceTimer = setTimeout(() => saveRemarks(input.dataset.id, input.value), 1500);
     });
   });
 }

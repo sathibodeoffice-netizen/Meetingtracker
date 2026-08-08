@@ -196,6 +196,21 @@ function renderList() {
       if (m) openMeetingModal(m);
     });
   });
+
+  // Wire delete buttons
+  wrap.querySelectorAll('.meeting-del-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      e.preventDefault();
+      const m = APP.meetings.find(x => x.id === btn.dataset.id);
+      if (!m) return;
+      if (!confirm(`"​${m.title}"​ মিটিং এবং এর সমস্ত টাস্ক মুছে ফেলবেন?`)) return;
+      APP.meetings = APP.meetings.filter(x => x.id !== btn.dataset.id);
+      APP.save();
+      showToast('মিটিং মুছে ফেলা হয়েছে');
+      renderList();
+    });
+  });
 }
 
 function buildMeetingCard(m) {
@@ -242,6 +257,9 @@ function buildMeetingCard(m) {
       <div class="meeting-actions">
         <button class="btn-icon meeting-edit-btn" data-id="${m.id}" title="মিটিং সম্পাদনা">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </button>
+        <button class="btn-icon danger meeting-del-btn" data-id="${m.id}" title="মিটিং মুছুন">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
         </button>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-3)"><polyline points="9 18 15 12 9 6"/></svg>
       </div>

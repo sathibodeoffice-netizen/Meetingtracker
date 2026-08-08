@@ -116,6 +116,12 @@ const APP = {
   },
 
   async save() {
+    // Prevent concurrent saves — queue at most one pending save
+    if (this._saving) {
+      this._pendingSave = true;
+      return;
+    }
+    this._saving = true;
     try {
       await fetch('/api/meetings', {
         method: 'POST',
@@ -124,6 +130,12 @@ const APP = {
       });
     } catch (e) {
       console.warn('Could not save to DB:', e);
+    } finally {
+      this._saving = false;
+      if (this._pendingSave) {
+        this._pendingSave = false;
+        this.save(); // flush the queued save
+      }
     }
   }
 };
