@@ -55,11 +55,31 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'মিটিং সমূহের একটি অ্যারে প্রত্যাশিত' });
       }
 
-      // To mirror localStorage behavior exactly, we clear the collection and insert the new state
+      const existing = await collection.find({}).toArray();
+
+      // Refuse to wipe a non-empty collection unless the client explicitly says so
+      // (e.g. the user deleted the very last meeting). Protects against a page that
+      // failed to load and is about to save an empty list over real data.
+      if (meetingsData.length === 0 && existing.length > 0 && req.query.allowEmpty !== '1') {
+        return res.status(409).json({ error: 'খালি তালিকা দিয়ে বিদ্যমান তথ্য মুছে ফেলা হয়নি।' });
+      }
+
+      // Keep a snapshot of the previous state before overwriting (last 30 kept)
+      if (existing.length > 0) {
+        const snapshots = db.collection('meetings_snapshots');
+        await snapshots.insertOne({
+          savedAt: new Date(),
+          meetings: existing.map(({ _id, ...rest }) => rest)
+        });
+        const old = await snapshots.find({}, { projection: { _id: 1 } })
+          .sort({ savedAt: -1 }).skip(30).toArray();
+        if (old.length) await snapshots.deleteMany({ _id: { $in: old.map(o => o._id) } });
+      }
+
+      // Replace the collection with the new state
       await collection.deleteMany({});
-      
       if (meetingsData.length > 0) {
-        await collection.insertMany(meetingsData);
+        await collection.insertMany(meetingsData.map(({ _id, ...rest }) => rest));
       }
 
       return res.status(200).json({ success: true, message: 'Saved successfully' });

@@ -104,32 +104,41 @@ const APP = {
   },
 
   async load() {
+    this.loaded = false;
     try {
       const res = await fetch('/api/meetings');
-      if (!res.ok) throw new Error('API error');
+      if (!res.ok) throw new Error('API error ' + res.status);
       const data = await res.json();
-      const raw = Array.isArray(data) ? data : [];
+      if (!Array.isArray(data)) throw new Error('Unexpected API response');
       // Deduplicate by app-level id — keeps only the first occurrence.
-      // This self-heals any duplicate entries already in the database;
-      // the next save() will write back the clean deduplicated array.
+      // Meetings without an id are kept and given one (never silently dropped).
       const seen = new Set();
-      this.meetings = raw.filter(m => {
-        if (!m.id || seen.has(m.id)) return false;
+      let changed = false;
+      this.meetings = data.filter(m => {
+        if (!m.id) { m.id = generateId(); changed = true; }
+        if (seen.has(m.id)) { changed = true; return false; }
         seen.add(m.id);
         return true;
       });
-      // If we found duplicates, immediately persist the clean state
-      if (this.meetings.length < raw.length) {
-        console.warn(`Deduplicated ${raw.length - this.meetings.length} duplicate meeting(s) from DB.`);
+      this.loaded = true;
+      if (changed) {
+        console.warn('Cleaned meeting list (duplicates / missing ids) — saving.');
         this.save();
       }
     } catch (e) {
       console.warn('Could not load from DB:', e);
       this.meetings = [];
+      // loaded stays false → save() is blocked, so an empty list can never overwrite the DB
+      showToast('ডাটাবেজ থেকে তথ্য লোড করা যায়নি। পেজটি রিফ্রেশ করুন।', 'error');
     }
   },
 
   async save() {
+    if (!this.loaded) {
+      console.warn('Save blocked: data was not loaded from the DB.');
+      showToast('তথ্য লোড না হওয়ায় সংরক্ষণ করা হয়নি। পেজটি রিফ্রেশ করুন।', 'error');
+      return;
+    }
     // Prevent concurrent saves — queue at most one pending save
     if (this._saving) {
       this._pendingSave = true;
@@ -137,13 +146,16 @@ const APP = {
     }
     this._saving = true;
     try {
-      await fetch('/api/meetings', {
+      const url = this.meetings.length === 0 ? '/api/meetings?allowEmpty=1' : '/api/meetings';
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.meetings)
       });
+      if (!res.ok) throw new Error('API error ' + res.status);
     } catch (e) {
       console.warn('Could not save to DB:', e);
+      showToast('সংরক্ষণ ব্যর্থ হয়েছে। সার্ভার সংযোগ পরীক্ষা করুন।', 'error');
     } finally {
       this._saving = false;
       if (this._pendingSave) {
